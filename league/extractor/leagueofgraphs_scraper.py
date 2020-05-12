@@ -532,7 +532,7 @@ import boto3
 
 game_basic_df.to_csv('test.csv', index=False, encoding='utf-8')
 s3_bucket = 'leagueofgraphs'
-input_filename = '/Users/brianshin/brian/work/repo/brian_dwh/test.csv'
+input_filename = '~/ubuntu/brian_dwh/league/test.csv'
 output_filename = 'test.csv'
 
 
@@ -563,7 +563,7 @@ load_s3(
 # def upload_to_aws(local_file, bucket, s3_file):
 #     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
 #                       aws_secret_access_key=SECRET_KEY)
-#
+#c
 #     try:
 #         s3.upload_file(local_file, bucket, s3_file)
 #         print("Upload Successful")
