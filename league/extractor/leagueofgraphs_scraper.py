@@ -532,7 +532,7 @@ import boto3
 
 game_basic_df.to_csv('test.csv', index=False, encoding='utf-8')
 s3_bucket = 'leagueofgraphs'
-input_filename = '/home/ubuntu/ubuntu/brian_dwh/league/test.csv'
+input_filename = '/home/ubuntu/ubuntu/brian_dwh/test.csv'
 output_filename = 'test.csv'
 
 
