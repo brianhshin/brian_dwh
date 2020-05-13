@@ -22,6 +22,7 @@ import shutil
 import tempfile
 import boto3
 import datetime as dt
+import sys
 
 ssl._create_default_https_context = ssl._create_unverified_context
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
@@ -511,12 +512,20 @@ def load_s3(s3_bucket, input_filename, output_filename):
 
 ################################################################################
 
-def parse_leagueofgraphs(username):
+def get_parameters():
+    ## get the env
+    user = sys.argv[1] if len(sys.argv) > 1 else 'rickyyytan'
+    user = user.upper()
+    return user
+
+
+def parse_leagueofgraphs():
 
     start_time = dt.datetime.now()
     print('script started at:', start_time)
 
     # username = 'rickyyytan'
+    username = get_parameters()
 
     profile_soup = get_profile_soup(username)
 
