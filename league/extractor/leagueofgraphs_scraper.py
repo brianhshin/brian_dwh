@@ -1,14 +1,21 @@
 """
-@author: Brian
-@date: 07.25.18
-@title: ufc_fightmetrics_scraper.py
+author: Brian Shin
+date: 05.12.2020
+email: brianhesungshin@gmail.com
+"""
 
-This script uses bs4 to crawl all ufc fights, events, fighter stats, and fightstats from fightmetric.com.
+"""
+  usage: python leagueofgraphs_scraper.py [username (default is rickyyytan)]
+
+  The purpose of this assignment is to scrape a league of graphs profile with games.
+  The dataframes get written to s3 bucket leagueofgraphs/dataframe/dataframe_date.csv.
+  (ex: leagueofgraphs/profile/profile_20200513.csv)
 
 """
 
 from bs4 import BeautifulSoup as bs
 from time import sleep
+from urllib.request import Request, urlopen
 
 import pandas as pd
 import numpy as np
@@ -25,13 +32,9 @@ import datetime as dt
 import sys
 
 ssl._create_default_https_context = ssl._create_unverified_context
-pd.set_option('display.float_format', lambda x: '%.3f' % x)
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
 
 today = dt.datetime.now().strftime("%Y%m%d")
 
-from urllib.request import Request, urlopen
 ################################################################################
 
 def parse_text(unparsed):
@@ -575,9 +578,9 @@ def parse_leagueofgraphs():
     s3_bucket = 'leagueofgraphs'
 
     for final_df in final_dfs:
-        filename = '/home/ubuntu/ubuntu/brian_dwh/'+final_df[0]+'.csv'
+        filename = '/home/ubuntu/ubuntu/brian_dwh/league_temp_output/'+final_df[0]+'.csv'
         file = final_df[1]
-        output_filename = final_df[0]+'_'+today+'.csv'
+        output_filename = final_df[0]+'/'+final_df[0]+'_'+today+'.csv'
         file.to_csv(filename, index=False, encoding='utf-8')
         load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
 
