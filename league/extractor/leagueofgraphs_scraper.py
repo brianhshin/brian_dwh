@@ -529,6 +529,7 @@ def parse_leagueofgraphs():
 
     # username = 'rickyyytan'
     username = get_parameters()
+    print('parsing profile:', username)
 
     profile_soup = get_profile_soup(username)
 
@@ -559,12 +560,11 @@ def parse_leagueofgraphs():
     games_misc_df = pd.DataFrame()
 
     for game in games_list:
-        print(game)
+        print('parsing game:', game)
         game_basic_df, game_dmg_df, game_misc_df = get_game_data(game)
         games_basic_df = pd.concat([games_basic_df, game_basic_df])
         games_dmg_df = pd.concat([games_dmg_df, game_dmg_df])
         games_misc_df = pd.concat([games_misc_df, game_misc_df])
-
 
     games_stats_df = games_dmg_df.merge(games_misc_df, on=['legend', 'game'], how='left')
     games_combined_df = game_basic_df.merge(
@@ -573,12 +573,11 @@ def parse_leagueofgraphs():
         right_on=['game', 'legend'],
         how='left')
 
-
     final_dfs = [('profile', profile_df), ('favchamps', favchamps_df), ('roles', roles_df), ('playswith', playswith_df), ('games_stats', games_stats_df), ('games_combined', games_combined_df)]
     s3_bucket = 'leagueofgraphs'
 
     for final_df in final_dfs:
-        filename = '/home/ubuntu/ubuntu/brian_dwh/league_temp_output/'+final_df[0]+'.csv'
+        filename = '/home/ubuntu/ubuntu/brian_dwh/league/league_temp_output/'+final_df[0]+'.csv'
         file = final_df[1]
         output_filename = final_df[0]+'/'+final_df[0]+'_'+today+'.csv'
         file.to_csv(filename, index=False, encoding='utf-8')
