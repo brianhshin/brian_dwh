@@ -16,23 +16,22 @@ import os
 import urllib.request
 import string
 import re
-import datetime
 import ssl
+import os
+import shutil
+import tempfile
+import boto3
+import datetime as dt
 
 ssl._create_default_https_context = ssl._create_unverified_context
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 
-start_time = datetime.datetime.now()
-print('script started at:', start_time)
+today = dt.datetime.now().strftime("%Y%m%d")
 
 from urllib.request import Request, urlopen
-
-
-
-username = 'rickyyytan'
-
+################################################################################
 
 def parse_text(unparsed):
 
@@ -60,7 +59,7 @@ def get_profile_soup(username):
 
     return profile_soup
 
-profile_soup = get_profile_soup(username)
+################################################################################
 
 def get_favchamp_data(profile_soup, all, played, winrate, number):
 
@@ -102,12 +101,7 @@ def get_favchamp_data(profile_soup, all, played, winrate, number):
     return favchamp_df
 
 
-favchamp1_df = get_favchamp_data(profile_soup, 0, 1, 2, 1)
-favchamp2_df = get_favchamp_data(profile_soup, 1, 4, 5, 2)
-favchamp3_df = get_favchamp_data(profile_soup, 2, 7, 8, 3)
-favchamp4_df = get_favchamp_data(profile_soup, 3, 10, 11, 4)
-
-favchamps_df = pd.concat([favchamp1_df, favchamp2_df, favchamp3_df, favchamp4_df], axis=1)
+################################################################################
 
 def get_role_data(profile_soup, number):
 
@@ -130,12 +124,7 @@ def get_role_data(profile_soup, number):
 
     return role_df
 
-
-role1_df = get_role_data(profile_soup, 1)
-role2_df = get_role_data(profile_soup, 2)
-role3_df = get_role_data(profile_soup, 3)
-role4_df = get_role_data(profile_soup, 4)
-roles_df = pd.concat([role1_df, role2_df, role3_df, role4_df], axis=1)
+################################################################################
 
 def get_playswith_data(profile_soup, number):
 
@@ -159,12 +148,7 @@ def get_playswith_data(profile_soup, number):
 
     return playswith_df
 
-
-playswith1_df = get_playswith_data(profile_soup, 1)
-playswith2_df = get_playswith_data(profile_soup, 2)
-playswith3_df = get_playswith_data(profile_soup, 3)
-playswith4_df = get_playswith_data(profile_soup, 4)
-playswith_df = pd.concat([playswith1_df, playswith2_df, playswith3_df, playswith4_df], axis=1)
+################################################################################
 
 def get_profile_data(profile_soup):
 
@@ -230,7 +214,7 @@ def get_profile_data(profile_soup):
 
     return profile_df
 
-profile_df = get_profile_data(profile_soup)
+################################################################################
 
 def get_game_links(profile_soup):
 
@@ -244,12 +228,11 @@ def get_game_links(profile_soup):
 
     return games_list
 
-games_list = get_game_links(profile_soup)
-
+################################################################################
 
 def get_game_soup(game):
 
-    game_url = 'https://www.leagueofgraphs.com'+game
+    game_url = 'https://www.leagueofgraphs.com/'+game
     hdr = {'User-Agent': 'Mozilla/5.0'}
     game_req = Request(game_url,headers=hdr)
     game_html = urlopen(game_req)
@@ -260,6 +243,10 @@ def get_game_soup(game):
 
 
 def get_game_basic_data(game_soup, game_participant, game):
+
+    # game_participant = 'participant8'
+    # game = 'match/na/3416358986#participant8'
+    # game_soup = get_game_soup(game)
 
     game_legend = game_soup.find('div', {'data-tab-target': game_participant}).find('img')['alt']
 
@@ -500,6 +487,7 @@ def get_game_dmg_data(game_soup):
 def get_game_data(game):
 
     # game = '/match/na/3402844986#participant4'
+
     game_participant = game.split('#')[1]
     game_soup = get_game_soup(game)
 
@@ -513,72 +501,106 @@ def get_game_data(game):
 
     return game_basic_df, game_dmg_df, game_misc_df
 
-game_basic_df, game_dmg_df, game_misc_df = get_game_data(games_list[0])
-game_basic_df.head(2)
-game_dmg_df.head(2)
-game_misc_df.head(2)
-
-
-
-game_basic_df.merge(game_dmg_df, on='legend', how='left')
-
-
-import os
-import shutil
-import tempfile
-import boto3
-
-# cd ~
-
-game_basic_df.to_csv('test.csv', index=False, encoding='utf-8')
-s3_bucket = 'leagueofgraphs'
-input_filename = '/home/ubuntu/ubuntu/brian_dwh/test.csv'
-output_filename = 'test.csv'
-
-
-
-""" Pushes file to S3. """
+################################################################################
 
 def load_s3(s3_bucket, input_filename, output_filename):
         s3 = boto3.resource('s3')
         s3.meta.client.upload_file(input_filename, s3_bucket, output_filename)
         print ('COMPLETE: ' + input_filename + ' loaded into s3://' +
                s3_bucket + ' as ' + output_filename)
-load_s3(
-    s3_bucket=s3_bucket,
-    input_filename=input_filename,
-    output_filename=output_filename,
-)
+
+################################################################################
+
+def parse_leagueofgraphs(username):
+
+    start_time = dt.datetime.now()
+    print('script started at:', start_time)
+
+    # username = 'rickyyytan'
+
+    profile_soup = get_profile_soup(username)
+
+    favchamp1_df = get_favchamp_data(profile_soup, 0, 1, 2, 1)
+    favchamp2_df = get_favchamp_data(profile_soup, 1, 4, 5, 2)
+    favchamp3_df = get_favchamp_data(profile_soup, 2, 7, 8, 3)
+    favchamp4_df = get_favchamp_data(profile_soup, 3, 10, 11, 4)
+    favchamps_df = pd.concat([favchamp1_df, favchamp2_df, favchamp3_df, favchamp4_df], axis=1)
+
+    role1_df = get_role_data(profile_soup, 1)
+    role2_df = get_role_data(profile_soup, 2)
+    role3_df = get_role_data(profile_soup, 3)
+    role4_df = get_role_data(profile_soup, 4)
+    roles_df = pd.concat([role1_df, role2_df, role3_df, role4_df], axis=1)
+
+    playswith1_df = get_playswith_data(profile_soup, 1)
+    playswith2_df = get_playswith_data(profile_soup, 2)
+    playswith3_df = get_playswith_data(profile_soup, 3)
+    playswith4_df = get_playswith_data(profile_soup, 4)
+    playswith_df = pd.concat([playswith1_df, playswith2_df, playswith3_df, playswith4_df], axis=1)
+
+    profile_df = get_profile_data(profile_soup)
+
+    games_list = get_game_links(profile_soup)
+
+    games_basic_df = pd.DataFrame()
+    games_dmg_df = pd.DataFrame()
+    games_misc_df = pd.DataFrame()
+
+    for game in games_list:
+        print(game)
+        game_basic_df, game_dmg_df, game_misc_df = get_game_data(game)
+        games_basic_df = pd.concat([games_basic_df, game_basic_df])
+        games_dmg_df = pd.concat([games_dmg_df, game_dmg_df])
+        games_misc_df = pd.concat([games_misc_df, game_misc_df])
 
 
-
-# import boto3
-# from botocore.exceptions import NoCredentialsError
-#
-# ACCESS_KEY = 'AKIAJIOOOLGXBFH5FJYA'
-# SECRET_KEY = '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'
-#
-#
-#
-# def upload_to_aws(local_file, bucket, s3_file):
-#     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-#                       aws_secret_access_key=SECRET_KEY)
-#c
-#     try:
-#         s3.upload_file(local_file, bucket, s3_file)
-#         print("Upload Successful")
-#         return True
-#     except FileNotFoundError:
-#         print("The file was not found")
-#         return False
-#     except NoCredentialsError:
-#         print("Credentials not available")
-#         return False
-#
-#
-# uploaded = upload_to_aws(input_filename, s3_bucket, output_filename)
-#
+    games_stats_df = games_dmg_df.merge(games_misc_df, on=['legend', 'game'], how='left')
+    games_combined_df = game_basic_df.merge(
+        games_stats_df,
+        left_on=['game_url', 'legend'],
+        right_on=['game', 'legend'],
+        how='left')
 
 
-time = (datetime.datetime.now() - start_time)
-print("--- {} ---".format(datetime.timedelta(seconds=time.seconds)))
+    final_dfs = [('profile', profile_df), ('favchamps', favchamps_df), ('roles', roles_df), ('playswith', playswith_df), ('games_stats', games_stats_df), ('games_combined', games_combined_df)]
+    s3_bucket = 'leagueofgraphs'
+
+    for final_df in final_dfs:
+        filename = '/home/ubuntu/ubuntu/brian_dwh/'+final_df[0]+'.csv'
+        file = final_df[1]
+        output_filename = final_df[0]+'_'+today+'.csv'
+        file.to_csv(filename, index=False, encoding='utf-8')
+        load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
+
+    # import boto3
+    # from botocore.exceptions import NoCredentialsError
+    #
+    # ACCESS_KEY = 'AKIAJIOOOLGXBFH5FJYA'
+    # SECRET_KEY = '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'
+    #
+    #
+    #
+    # def upload_to_aws(local_file, bucket, s3_file):
+    #     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
+    #                       aws_secret_access_key=SECRET_KEY)
+    #c
+    #     try:
+    #         s3.upload_file(local_file, bucket, s3_file)
+    #         print("Upload Successful")
+    #         return True
+    #     except FileNotFoundError:
+    #         print("The file was not found")
+    #         return False
+    #     except NoCredentialsError:
+    #         print("Credentials not available")
+    #         return False
+    #
+    #
+    # uploaded = upload_to_aws(input_filename, s3_bucket, output_filename)
+    #
+
+    time = (dt.datetime.now() - start_time)
+    print("--- {} ---".format(dt.timedelta(seconds=time.seconds)))
+
+if __name__ == '__main__':
+    parse_leagueofgraphs()
