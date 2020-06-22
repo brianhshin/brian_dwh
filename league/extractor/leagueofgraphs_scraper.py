@@ -270,7 +270,8 @@ def get_game_basic_data(game_soup, game_participant, game):
     game_assists_parsed = parse_text(game_assists)
 
     game_subnum = game_soup.find('div', attrs={'data-tab-id': game_participant}).find('div', {'class':'subNumbers'})
-    game_subnum_parsed = parse_text(game_subnum).split(' - \r\n')
+    # game_subnum_parsed = parse_text(game_subnum).split(' - \r\n')
+    game_subnum_parsed = parse_text(game_subnum).split(' - \n')
     game_minions_parsed = game_subnum_parsed[0]
     game_gold_parsed = game_subnum_parsed[1].lstrip(' ')
 
@@ -518,7 +519,7 @@ def load_s3(s3_bucket, input_filename, output_filename):
 def get_parameters():
     ## get the env
     user = sys.argv[1] if len(sys.argv) > 1 else 'rickyyytan'
-    user = user.upper()
+    # user = user.upper()
     return user
 
 
