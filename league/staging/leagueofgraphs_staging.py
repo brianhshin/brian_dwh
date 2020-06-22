@@ -94,6 +94,13 @@ def create_connection(db):
     cur = conn.cursor()
     # drop tables for each ETL run
     cur.execute('DROP TABLE IF EXISTS {}'.format('profile_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('favchamp_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('role_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('playswith_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('game_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('game_dmg_staging'))
+    cur.execute('DROP TABLE IF EXISTS {}'.format('game_misc_staging'))
+
   except Error as e:
     print(e)
 
@@ -313,8 +320,7 @@ def create_staging_tables():
     game_misc_staging()
 
 
-
-#
+# 
 # cur = conn.cursor()
 #
 # insert_sql = f"""INSERT INTO profile_staging ({columns}) VALUES({values});"""
@@ -470,4 +476,4 @@ def create_staging_tables():
 
 
 if __name__ == '__main__':
-    get_s3_files()
+    create_staging_tables()
