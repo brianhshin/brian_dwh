@@ -19,6 +19,8 @@ import sqlite3
 import itertools
 import operator
 import boto3
+import datetime as dt
+
 
 today = dt.datetime.now().strftime("%Y%m%d")
 
