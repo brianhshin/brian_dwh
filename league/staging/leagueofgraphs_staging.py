@@ -63,20 +63,21 @@ def get_s3_file(category):
     return df
 
 
-favchamps = get_s3_file('favchamps')
-games_combined = get_s3_file('games_combined')
-games_stats = get_s3_file('games_stats')
-playswith = get_s3_file('playswith')
-profile = get_s3_file('profile')
-roles = get_s3_file('roles')
+def get_s3_files():
+    favchamps = get_s3_file('favchamps')
+    games_combined = get_s3_file('games_combined')
+    games_stats = get_s3_file('games_stats')
+    playswith = get_s3_file('playswith')
+    profile = get_s3_file('profile')
+    roles = get_s3_file('roles')
 
 
-print('favchamps shape:', favchamps.shape)
-print('games_combined shape:', favchamps.shape)
-print('games_stats shape:', games_stats.shape)
-print('playswith shape:', playswith.shape)
-print('profile shape:', profile.shape)
-print('roles shape:', roles.shape)
+    print('favchamps shape:', favchamps.shape)
+    print('games_combined shape:', favchamps.shape)
+    print('games_stats shape:', games_stats.shape)
+    print('playswith shape:', playswith.shape)
+    print('profile shape:', profile.shape)
+    print('roles shape:', roles.shape)
 
 
 # def create_connection(db):
@@ -293,4 +294,4 @@ print('roles shape:', roles.shape)
 
 
 if __name__ == '__main__':
-    test_profile_s3_download()
+    get_s3_files()
