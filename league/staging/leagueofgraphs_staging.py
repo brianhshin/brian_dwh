@@ -71,84 +71,260 @@ def get_s3_files():
     profile = get_s3_file('profile')
     roles = get_s3_file('roles')
 
+    print('favchamps shape:', favchamps.shape, favchamps.columns)
+    print('games_combined shape:', favchamps.shape, favchamps.columns)
+    print('games_stats shape:', games_stats.shape, games_stats.columns)
+    print('playswith shape:', playswith.shape, playswith.columns)
+    print('profile shape:', profile.shape, profile.columns)
+    print('roles shape:', roles.shape, roles.columns)
 
-    print('favchamps shape:', favchamps.shape)
-    print('games_combined shape:', favchamps.shape)
-    print('games_stats shape:', games_stats.shape)
-    print('playswith shape:', playswith.shape)
-    print('profile shape:', profile.shape)
-    print('roles shape:', roles.shape)
+    return favchamps, games_combined, games_stats, playswith, profile, roles
 
 
-# def create_connection(db):
-#   """
-#     Create a database connection to the SQLite database specified by db_file.
-#     :param db_file: database file
-#     :return: Connection object or None
-#   """
-#   conn = None
-#   try:
-#     # connect to db specified in run_etl_sim
-#     conn = sqlite3.connect(db)
-#     cur = conn.cursor()
-#     # drop tables for each ETL run
-#     cur.execute('DROP TABLE IF EXISTS {}'.format('profile_staging'))
-#   except Error as e:
-#     print(e)
+def create_connection(db):
+  """
+    Create a database connection to the SQLite database specified by db_file.
+    :param db_file: database file
+    :return: Connection object or None
+  """
+  conn = None
+  try:
+    # connect to db specified in run_etl_sim
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+    # drop tables for each ETL run
+    cur.execute('DROP TABLE IF EXISTS {}'.format('profile_staging'))
+  except Error as e:
+    print(e)
+
+  return conn
+
+
+def profile_staging():
+
+    profile_db = 'profile_staging.db'
+    conn = create_connection(profile_db)
+    cur = conn.cursor()
+    profile_create_sql = """
+        CREATE TABLE IF NOT EXISTS profile_staging (
+        	date TEXT PRIMARY KEY,
+        	tier TEXT NOT NULL,
+        	queue TEXT NOT NULL,
+            rank INTEGER NOT NULL,
+        	region_rank TEXT NOT NULL,
+        	lp INTEGER NOT NULL,
+        	wins INTEGER NOT NULL,
+        	losses INTEGER NOT NULL,
+        	games INTEGER NOT NULL,
+        	winrate TEXT NOT NULL,
+        	avg_kills INTEGER NOT NULL,
+        	avg_deaths INTEGER NOT NULL,
+        	avg_assists INTEGER NOT NULL,
+        	tags TEXT NOT NULL
+        );
+        """
+
+    cur.execute(profile_create_sql)
+    conn.commit()
+
+
+def favchamp_staging():
+
+    favchamp_db = 'favchamp_staging.db'
+    conn = create_connection(favchamp_db)
+    cur = conn.cursor()
+    favchamp_create_sql = """
+        CREATE TABLE IF NOT EXISTS favchamp_staging (
+        	date TEXT PRIMARY KEY,
+            favchamp1 TEXT NOT NULL,
+            favchamp1_rank TEXT NOT NULL,
+            favchamp1_regrank TEXT NOT NULL,
+            favchamp1_kills TEXT NOT NULL,
+            favchamp1_deaths TEXT NOT NULL,
+            favchamp1_assists TEXT NOT NULL,
+            favchamp1_played TEXT NOT NULL,
+            favchamp1_winrate TEXT NOT NULL,
+            favchamp2 TEXT NOT NULL,
+            favchamp2_rank TEXT NOT NULL,
+            favchamp2_regrank TEXT NOT NULL,
+            favchamp2_kills TEXT NOT NULL,
+            favchamp2_deaths TEXT NOT NULL,
+            favchamp2_assists TEXT NOT NULL,
+            favchamp2_played TEXT NOT NULL,
+            favchamp2_winrate TEXT NOT NULL,
+            favchamp3 TEXT NOT NULL,
+            favchamp3_rank TEXT NOT NULL,
+            favchamp3_regrank TEXT NOT NULL,
+            favchamp3_kills TEXT NOT NULL,
+            favchamp3_deaths TEXT NOT NULL,
+            favchamp3_assists TEXT NOT NULL,
+            favchamp3_played TEXT NOT NULL,
+            favchamp3_winrate TEXT NOT NULL,
+            favchamp4 TEXT NOT NULL,
+            favchamp4_rank TEXT NOT NULL,
+            favchamp4_regrank TEXT NOT NULL,
+            favchamp4_kills TEXT NOT NULL,
+            favchamp4_deaths TEXT NOT NULL,
+            favchamp4_assists TEXT NOT NULL,
+            favchamp4_played TEXT NOT NULL,
+            favchamp4_winrate TEXT NOT NULL
+        );
+        """
+
+    cur.execute(favchamp_create_sql)
+    conn.commit()
+
+
+def role_staging():
+
+    role_db = 'role_staging.db'
+    conn = create_connection(role_db)
+    cur = conn.cursor()
+    role_create_sql = """
+        CREATE TABLE IF NOT EXISTS role_staging (
+            date TEXT PRIMARY KEY,
+            role1 TEXT NOT NULL,
+            role1_played TEXT NOT NULL,
+            role1_winrate TEXT NOT NULL,
+            role2 TEXT NOT NULL,
+            role2_played TEXT NOT NULL,
+            role2_winrate TEXT NOT NULL,
+            role3 TEXT NOT NULL,
+            role3_played TEXT NOT NULL,
+            role3_winrate TEXT NOT NULL,
+            role4 TEXT NOT NULL,
+            role4_played TEXT NOT NULL,
+            role4_winrate TEXT NOT NULL
+        );
+        """
+
+    cur.execute(role_create_sql)
+    conn.commit()
+
+
+def playswith_staging():
+
+    playswith_db = 'playswith_staging.db'
+    conn = create_connection(playswith_db)
+    cur = conn.cursor()
+    playswith_create_sql = """
+        CREATE TABLE IF NOT EXISTS playswith_staging (
+            playswith_id TEXT PRIMARY KEY,
+            date TEXT NOT NULL,
+            gamer_id TEXT NOT NULL,
+            playswith1_name TEXT NOT NULL,
+            playswith1_rank TEXT NOT NULL,
+            playswith1_played TEXT NOT NULL,
+            playswith1_winrate TEXT NOT NULL
+        );
+        """
+
+    cur.execute(playswith_create_sql)
+    conn.commit()
+
+
+def game_staging():
+
+    game_db = 'game_staging.db'
+    conn = create_connection(game_db)
+    cur = conn.cursor()
+    game_create_sql = """
+        CREATE TABLE IF NOT EXISTS game_staging (
+            game_id TEXT PRIMARY KEY,
+            game_played_date TEXT NOT NULL,
+            tags TEXT NOT NULL,
+            runes TEXT NOT NULL,
+            legend TEXT NOT NULL,
+            kills TEXT NOT NULL,
+            deaths TEXT NOT NULL,
+            assists TEXT NOT NULL
+        );
+        """
+
+    cur.execute(game_create_sql)
+    conn.commit()
+
+
+def game_dmg_staging():
+
+    game_dmg_db = 'game_dmg_staging.db'
+    conn = create_connection(game_dmg_db)
+    cur = conn.cursor()
+    game_dmg_create_sql = """
+        CREATE TABLE IF NOT EXISTS game_dmg_staging (
+            game_id TEXT PRIMARY KEY,
+            largest_killing_spree TEXT NOT NULL,
+            largest_multikill TEXT NOT NULL,
+            crowd_control_score TEXT NOT NULL,
+            physical_dmg_to_champs TEXT NOT NULL,
+            magic_dmg_to_champs TEXT NOT NULL,
+            true_dmg_to_champs TEXT NOT NULL,
+            total_dmg_dealt TEXT NOT NULL,
+            physical_dmg_dealt TEXT NOT NULL,
+            magic_dmg_dealt TEXT NOT NULL,
+            true_dmg_dealt TEXT NOT NULL,
+            total_dmg_to_turrets TEXT NOT NULL,
+            total_dmg_to_objs TEXT NOT NULL,
+            dmg_healed TEXT NOT NULL,
+            dmg_taken TEXT NOT NULL,
+            physical_dmg_taken TEXT NOT NULL,
+            magic_dmg_taken TEXT NOT NULL,
+            true_dmg_taken TEXT NOT NULL
+        );
+        """
+
+    cur.execute(game_dmg_create_sql)
+    conn.commit()
+
+
+def game_misc_staging():
+
+    game_misc_db = 'game_misc_staging.db'
+    conn = create_connection(game_misc_db)
+    cur = conn.cursor()
+    game_misc_create_sql = """
+        CREATE TABLE IF NOT EXISTS game_misc_staging (
+            game_id TEXT PRIMARY KEY,
+            vision_score TEXT NOT NULL,
+            wards TEXT NOT NULL,
+            wards_killed TEXT NOT NULL,
+            control_wards_purch TEXT NOT NULL,
+            gold_earned	gold_spent TEXT NOT NULL,
+            minions_killed TEXT NOT NULL,
+            neutral_minions_killed TEXT NOT NULL,
+            neutral_minions_killed_in_team_jungle TEXT NOT NULL,
+            neutral_minions_killed_in_enemy_jungle TEXT NOT NULL,
+            towers_destroyed TEXT NOT NULL,
+            inhibitors_destroyed TEXT NOT NULL
+        );
+        """
+
+    cur.execute(game_misc_create_sql)
+    conn.commit()
+
+
+def create_staging_tables():
+    profile_staging()
+    favchamp_staging()
+    role_staging()
+    playswith_staging()
+    game_staging()
+    game_dmg_staging()
+    game_misc_staging()
+
+
+
 #
-#   return conn
+# cur = conn.cursor()
 #
-# db = 'profile_staging.db'
-# conn = create_connection(db)
+# insert_sql = f"""INSERT INTO profile_staging ({columns}) VALUES({values});"""
 #
-#
-# def create_table(deduped_updates, conn):
-#   """
-#     Upsert deduped_updates into users table without fetching rows into python for manipulation (aka use SQL).
-#     Creates the table, inserts new rows, and updates existing rows with more recent data.
-#   """
-#
-#   cur = conn.cursor()
-#   # create table joes
-#   cur.execute("""
-#     CREATE TABLE IF NOT EXISTS profile_staging (
-#     	date TEXT PRIMARY KEY,
-#     	tier TEXT NOT NULL,
-#     	queue TEXT NOT NULL,
-#         rank INTEGER NOT NULL,
-#     	region_rank TEXT NOT NULL,
-#     	lp INTEGER NOT NULL,
-#     	wins INTEGER NOT NULL,
-#     	losses INTEGER NOT NULL,
-#     	games INTEGER NOT NULL,
-#     	winrate TEXT NOT NULL,
-#     	avg_kills INTEGER NOT NULL,
-#     	avg_deaths INTEGER NOT NULL,
-#     	avg_assists INTEGER NOT NULL,
-#     	tags TEXT NOT NULL,
-#     );
-#     """)
-#
-#     insert_sql = """
-#       INSERT OR IGNORE INTO profile_staging({})
-#       VALUES({})
-#       ;
-#       """.format(columns,values)
-#       cur = conn.cursor()
-#       cur.execute(insert_sql, row_values)
-#       conn.commit()
-#
-#       # if id exists but updated_at is more recent than what exists in the table, update row for that id
-#       update_sql = """
-#       UPDATE joes SET name = '{}', cookies = {}, updated_at = {} WHERE (id = {} AND updated_at < {})
-#       ;
-#       """.format(row_values[1],row_values[2],row_values[3],row_values[0],row_values[3])
-#       cur = conn.cursor()
-#       cur.execute(update_sql)
-#       conn.commit()
-#
-#
-#
+# cur.execute(insert_sql)
+
+
+
+
+
 #
 #   # # get column names using dict keys of the first row of deduped_updates
 #   # columns = ', '.join(deduped_updates[0].keys())
