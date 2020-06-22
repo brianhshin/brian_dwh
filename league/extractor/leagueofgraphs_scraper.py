@@ -540,7 +540,7 @@ def parse_leagueofgraphs():
     favchamp3_df = get_favchamp_data(profile_soup, 2, 7, 8, 3)
     favchamp4_df = get_favchamp_data(profile_soup, 3, 10, 11, 4)
     favchamps_df = pd.concat([favchamp1_df, favchamp2_df, favchamp3_df, favchamp4_df], axis=1)
-    favchamps_df['date'] = today_id
+    favchamps_df.insert(loc=0, column='date', value=today_id)
 
 
     role1_df = get_role_data(profile_soup, 1)
@@ -548,18 +548,18 @@ def parse_leagueofgraphs():
     role3_df = get_role_data(profile_soup, 3)
     role4_df = get_role_data(profile_soup, 4)
     roles_df = pd.concat([role1_df, role2_df, role3_df, role4_df], axis=1)
-    roles_df['date'] = today_id
+    roles_df.insert(loc=0, column='date', value=today_id)
 
     playswith1_df = get_playswith_data(profile_soup, 1)
     playswith2_df = get_playswith_data(profile_soup, 2)
     playswith3_df = get_playswith_data(profile_soup, 3)
     playswith4_df = get_playswith_data(profile_soup, 4)
     playswith_df = pd.concat([playswith1_df, playswith2_df, playswith3_df, playswith4_df], axis=1)
-    playswith_df['date'] = today_id
+    playswith_df.insert(loc=0, column='date', value=today_id)
 
 
     profile_df = get_profile_data(profile_soup)
-    profile_df['date'] = today_id
+    profile_df.insert(loc=0, column='date', value=today_id)
 
 
     games_list = get_game_links(profile_soup)
@@ -576,14 +576,14 @@ def parse_leagueofgraphs():
         games_misc_df = pd.concat([games_misc_df, game_misc_df])
 
     games_stats_df = games_dmg_df.merge(games_misc_df, on=['legend', 'game'], how='left')
-    games_stats_df['date'] = today_id
+    games_stats_df.insert(loc=0, column='date', value=today_id)
 
     games_combined_df = game_basic_df.merge(
         games_stats_df,
         left_on=['game_url', 'legend'],
         right_on=['game', 'legend'],
         how='left')
-    games_combined_df['date'] = today_id
+    games_combined_df.insert(loc=0, column='date', value=today_id)
 
     final_dfs = [('profile', profile_df), ('favchamps', favchamps_df), ('roles', roles_df), ('playswith', playswith_df), ('games_stats', games_stats_df), ('games_combined', games_combined_df)]
     s3_bucket = 'leagueofgraphs'
