@@ -54,7 +54,7 @@ def download_file_s3(bucket, s3_location, local_location, file_type):
     return df
 
 
-def download_file_s3(category):
+def get_s3_file(category):
     df = download_file_s3(
         'leagueofgraphs',
         f'{category}/{category}_{today}.csv',
@@ -63,12 +63,12 @@ def download_file_s3(category):
     return df
 
 
-favchamps = download_file_s3('favchamps')
-games_combined = download_file_s3('games_combined')
-games_stats = download_file_s3('games_stats')
-playswith = download_file_s3('playswith')
-profile = download_file_s3('profile')
-roles = download_file_s3('roles')
+favchamps = get_s3_file('favchamps')
+games_combined = get_s3_file('games_combined')
+games_stats = get_s3_file('games_stats')
+playswith = get_s3_file('playswith')
+profile = get_s3_file('profile')
+roles = get_s3_file('roles')
 
 
 print('favchamps shape:', favchamps.shape)
