@@ -58,7 +58,7 @@ def test_profile_s3_download():
     profile_s3 = download_file_s3(
         'leagueofgraphs',
         'profile/profile_20200513.csv',
-        '/home/ubuntu/ubuntu/brian_dwh/league/league_temp_output',
+        '~/ubuntu/brian_dwh/league/league_temp_output',
         'csv')
     print(profile_s3.shape)
     print(profile_s3.head())
