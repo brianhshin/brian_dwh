@@ -311,6 +311,7 @@ def game_misc_staging():
 
 
 def create_staging_tables():
+    get_s3_files()
     profile_staging()
     favchamp_staging()
     role_staging()
@@ -320,7 +321,7 @@ def create_staging_tables():
     game_misc_staging()
 
 
-# 
+#
 # cur = conn.cursor()
 #
 # insert_sql = f"""INSERT INTO profile_staging ({columns}) VALUES({values});"""
