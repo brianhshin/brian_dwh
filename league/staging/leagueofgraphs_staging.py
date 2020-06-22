@@ -20,7 +20,7 @@ import itertools
 import operator
 import boto3
 import datetime as dt
-
+import pandas as pd
 
 today = dt.datetime.now().strftime("%Y%m%d")
 
