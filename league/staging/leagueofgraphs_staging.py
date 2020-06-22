@@ -54,22 +54,31 @@ def download_file_s3(bucket, s3_location, local_location, file_type):
     return df
 
 
-def test_profile_s3_download():
-    profile_s3 = download_file_s3(
+def download_file_s3(category):
+    df = download_file_s3(
         'leagueofgraphs',
-        'profile/profile_20200513.csv',
+        f'{category}/{category}_{today}.csv',
         '/home/ubuntu/ubuntu/brian_dwh/league/league_temp_output/temp',
         'csv')
-    print(profile_s3.shape)
-    print(profile_s3.head())
+    return df
 
 
+favchamps = download_file_s3('favchamps')
+games_combined = download_file_s3('games_combined')
+games_stats = download_file_s3('games_stats')
+playswith = download_file_s3('playswith')
+profile = download_file_s3('profile')
+roles = download_file_s3('roles')
 
 
+print('favchamps shape:', favchamps.shape)
+print('games_combined shape:', favchamps.shape)
+print('games_stats shape:', games_stats.shape)
+print('playswith shape:', playswith.shape)
+print('profile shape:', profile.shape)
+print('roles shape:', roles.shape)
 
 
-#
-#
 # def create_connection(db):
 #   """
 #     Create a database connection to the SQLite database specified by db_file.
