@@ -150,6 +150,7 @@ def get_playswith_data(profile_soup, number):
                       f'playswith{number}_winrate': [playswith_winrate_parsed]}
 
     playswith_df = pd.DataFrame(playswith_dict)
+    playswith_df.insert(loc=0, column='date', value=today_id)
 
     return playswith_df
 
