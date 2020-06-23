@@ -623,13 +623,14 @@ def parse_leagueofgraphs():
         games_misc_df,
         on=['legend', 'game_id'],
         how='left')
-    games_stats_df.insert(loc=0, column='date', value=today_id)
 
     games_combined_df = game_basic_df.merge(
         games_stats_df,
         left_on=['game_id', 'legend'],
         right_on=['game_id', 'legend'],
         how='left')
+
+    games_stats_df.insert(loc=0, column='date', value=today_id)
     games_combined_df.insert(loc=0, column='date', value=today_id)
 
     final_dfs = [('profile', profile_df),
