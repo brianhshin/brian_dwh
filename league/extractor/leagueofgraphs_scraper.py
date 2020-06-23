@@ -293,7 +293,7 @@ def get_game_basic_data(game_soup, game_participant, game):
         game_run_parsed = parse_text(game_rune)
         game_runes_list.append(game_run_parsed)
 
-    game_basic_dict = {'game_url': [game],
+    game_basic_dict = {'game_id': [game],
                  'game_tags': [game_tags_list],
                  'game_runs': [game_runes_list],
                  'legend': [game_legend],
