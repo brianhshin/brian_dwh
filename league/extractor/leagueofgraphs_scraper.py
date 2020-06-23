@@ -487,12 +487,51 @@ def get_game_dmg_data(game_soup):
         legend8_misc_df,
         legend9_misc_df])
 
+    legends_dmg_df.rename(
+        columns={
+            'Largest Killing Spree':'largest_killing_spree',
+            'Largest MultiKill':'largest_multikill',
+            'Crowd control score':'crowd_control_score',
+            'Total damage to champions':'total_dmg_to_champs',
+            'Physical damage to champions':'physical_dmg_to_champs',
+            'Magic damage to champions':'magic_dmg_to_champs',
+            'True damage to champions':'true_dmg_to_champs',
+            'Total damage dealt':'total_dmg_dealt',
+            'Physical damage dealt':'physical_dmg_dealt',
+            'Magic damage dealt':'magic_dmg_dealt',
+            'True damage dealt':'true_dmg_dealt',
+            'Total damage to turrets':'total_dmg_to_turrets',
+            'Total damage to objectives':'total_dmg_to_objs',
+            'Damage healed':'dmg_healed',
+            'Damage taken':'dmg_taken',
+            'Physical Damage taken':'physical_dmg_taken',
+            'Magic Damage taken':'magic_dmg_taken',
+            'True Damage taken':'true_dmg_taken'},
+        inplace=True)
+
+    legends_misc_df.rename(
+        columns={
+            'Self mitigated damage':'self_mtgted_dmg',
+            'Vision Score':'vision_score',
+            'Wards':'wards',
+            'Wards killed':'wards_killed',
+            'Control wards purchased':'control_wards_purch',
+            'Gold earned':'gold_earned',
+            'Gold spent':'gold_spent',
+            'Minions killed':'minions_killed',
+            'Neutral Minions killed':'neutral_minions_killed',
+            'Neutral Minions killed in team jungle':'neutral_minions_killed_in_team_jungle',
+            'Neutral Minions killed in enemy jungle':'neutral_minions_killed_in_enemy_jungle',
+            'Towers destroyed':'towers_destroyed',
+            'Inhibitors destroyed':'inhibitors_destroyed'},
+        inplace=True)
+
     return legends_dmg_df, legends_misc_df
 
 
 def get_game_data(game):
 
-    # game = '/match/na/3402844986#participant4'
+    # game = '/match/na/3469404493#participant8'
 
     game_participant = game.split('#')[1]
     game_soup = get_game_soup(game)
@@ -502,10 +541,11 @@ def get_game_data(game):
     game_dmg_df.reset_index(drop=True, inplace=True)
     game_misc_df.reset_index(drop=True, inplace=True)
 
-    game_dmg_df['game'] = game
-    game_misc_df['game'] = game
+    game_dmg_df.insert(loc=0, column='game_id', value=game)
+    game_misc_df.insert(loc=0, column='game_id', value=game)
 
     return game_basic_df, game_dmg_df, game_misc_df
+
 
 ################################################################################
 
@@ -539,7 +579,9 @@ def parse_leagueofgraphs():
     favchamp2_df = get_favchamp_data(profile_soup, 1, 4, 5, 2)
     favchamp3_df = get_favchamp_data(profile_soup, 2, 7, 8, 3)
     favchamp4_df = get_favchamp_data(profile_soup, 3, 10, 11, 4)
-    favchamps_df = pd.concat([favchamp1_df, favchamp2_df, favchamp3_df, favchamp4_df], axis=1)
+    favchamps_df = pd.concat(
+        [favchamp1_df, favchamp2_df, favchamp3_df, favchamp4_df],
+        axis=1)
     favchamps_df.insert(loc=0, column='date', value=today_id)
 
 
@@ -554,7 +596,9 @@ def parse_leagueofgraphs():
     playswith2_df = get_playswith_data(profile_soup, 2)
     playswith3_df = get_playswith_data(profile_soup, 3)
     playswith4_df = get_playswith_data(profile_soup, 4)
-    playswith_df = pd.concat([playswith1_df, playswith2_df, playswith3_df, playswith4_df], axis=1)
+    playswith_df = pd.concat(
+        [playswith1_df, playswith2_df, playswith3_df, playswith4_df],
+        axis=1)
     playswith_df.insert(loc=0, column='date', value=today_id)
 
 
@@ -575,17 +619,25 @@ def parse_leagueofgraphs():
         games_dmg_df = pd.concat([games_dmg_df, game_dmg_df])
         games_misc_df = pd.concat([games_misc_df, game_misc_df])
 
-    games_stats_df = games_dmg_df.merge(games_misc_df, on=['legend', 'game'], how='left')
+    games_stats_df = games_dmg_df.merge(
+        games_misc_df,
+        on=['legend', 'game_id'],
+        how='left')
     games_stats_df.insert(loc=0, column='date', value=today_id)
 
     games_combined_df = game_basic_df.merge(
         games_stats_df,
-        left_on=['game_url', 'legend'],
-        right_on=['game', 'legend'],
+        left_on=['game_id', 'legend'],
+        right_on=['game_id', 'legend'],
         how='left')
     games_combined_df.insert(loc=0, column='date', value=today_id)
 
-    final_dfs = [('profile', profile_df), ('favchamps', favchamps_df), ('roles', roles_df), ('playswith', playswith_df), ('games_stats', games_stats_df), ('games_combined', games_combined_df)]
+    final_dfs = [('profile', profile_df),
+                 ('favchamps', favchamps_df),
+                 ('roles', roles_df),
+                 ('playswith', playswith_df),
+                 ('games_stats', games_stats_df),
+                 ('games_combined', games_combined_df)]
     s3_bucket = 'leagueofgraphs'
 
     for final_df in final_dfs:
@@ -593,34 +645,10 @@ def parse_leagueofgraphs():
         file = final_df[1]
         output_filename = final_df[0]+'/'+final_df[0]+'_'+today+'.csv'
         file.to_csv(filename, index=False, encoding='utf-8')
-        load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
-
-    # import boto3
-    # from botocore.exceptions import NoCredentialsError
-    #
-    # ACCESS_KEY = 'AKIAJIOOOLGXBFH5FJYA'
-    # SECRET_KEY = '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'
-    #
-    #
-    #
-    # def upload_to_aws(local_file, bucket, s3_file):
-    #     s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY,
-    #                       aws_secret_access_key=SECRET_KEY)
-    #c
-    #     try:
-    #         s3.upload_file(local_file, bucket, s3_file)
-    #         print("Upload Successful")
-    #         return True
-    #     except FileNotFoundError:
-    #         print("The file was not found")
-    #         return False
-    #     except NoCredentialsError:
-    #         print("Credentials not available")
-    #         return False
-    #
-    #
-    # uploaded = upload_to_aws(input_filename, s3_bucket, output_filename)
-    #
+        load_s3(
+            s3_bucket=s3_bucket,
+            input_filename=filename,
+            output_filename=output_filename)
 
     time = (dt.datetime.now() - start_time)
     print("--- {} ---".format(dt.timedelta(seconds=time.seconds)))

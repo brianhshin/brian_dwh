@@ -72,7 +72,7 @@ def get_s3_files():
     roles = get_s3_file('roles')
 
     print('favchamps shape:', favchamps.shape, favchamps.columns)
-    print('games_combined shape:', favchamps.shape, favchamps.columns)
+    print('games_combined shape:', games_combined.shape, games_combined.columns)
     print('games_stats shape:', games_stats.shape, games_stats.columns)
     print('playswith shape:', playswith.shape, playswith.columns)
     print('profile shape:', profile.shape, profile.columns)
@@ -93,13 +93,13 @@ def create_connection(db):
     conn = sqlite3.connect(db)
     cur = conn.cursor()
     # drop tables for each ETL run
-    cur.execute('DROP TABLE IF EXISTS {}'.format('profile_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('favchamp_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('role_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('playswith_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('game_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('game_dmg_staging'))
-    cur.execute('DROP TABLE IF EXISTS {}'.format('game_misc_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('profile_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('favchamp_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('role_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('playswith_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('game_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('game_dmg_staging'))
+    # cur.execute('DROP TABLE IF EXISTS {}'.format('game_misc_staging'))
 
   except Error as e:
     print(e)
@@ -135,7 +135,7 @@ def profile_staging():
     conn.commit()
 
 
-def favchamp_staging():
+def favchamp_staging(df):
 
     favchamp_db = 'favchamp_staging.db'
     conn = create_connection(favchamp_db)
@@ -177,12 +177,18 @@ def favchamp_staging():
             favchamp4_winrate TEXT NOT NULL
         );
         """
-
     cur.execute(favchamp_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO favchamp_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
-def role_staging():
+def role_staging(df):
 
     role_db = 'role_staging.db'
     conn = create_connection(role_db)
@@ -206,10 +212,17 @@ def role_staging():
         """
 
     cur.execute(role_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO role_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
-def playswith_staging():
+def playswith_staging(df):
 
     playswith_db = 'playswith_staging.db'
     conn = create_connection(playswith_db)
@@ -227,10 +240,17 @@ def playswith_staging():
         """
 
     cur.execute(playswith_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO playswith_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
-def game_staging():
+def game_staging(df):
 
     game_db = 'game_staging.db'
     conn = create_connection(game_db)
@@ -249,10 +269,17 @@ def game_staging():
         """
 
     cur.execute(game_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO game_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
-def game_dmg_staging():
+def game_dmg_staging(df):
 
     game_dmg_db = 'game_dmg_staging.db'
     conn = create_connection(game_dmg_db)
@@ -263,6 +290,7 @@ def game_dmg_staging():
             largest_killing_spree TEXT NOT NULL,
             largest_multikill TEXT NOT NULL,
             crowd_control_score TEXT NOT NULL,
+            total_dmg_to_champs TEXT NOT NULL,
             physical_dmg_to_champs TEXT NOT NULL,
             magic_dmg_to_champs TEXT NOT NULL,
             true_dmg_to_champs TEXT NOT NULL,
@@ -281,10 +309,17 @@ def game_dmg_staging():
         """
 
     cur.execute(game_dmg_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO game_dmg_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
-def game_misc_staging():
+def game_misc_staging(df):
 
     game_misc_db = 'game_misc_staging.db'
     conn = create_connection(game_misc_db)
@@ -292,11 +327,13 @@ def game_misc_staging():
     game_misc_create_sql = """
         CREATE TABLE IF NOT EXISTS game_misc_staging (
             game_id TEXT PRIMARY KEY,
+            self_mtgted_dmg TEXT NOT NULL,
             vision_score TEXT NOT NULL,
             wards TEXT NOT NULL,
             wards_killed TEXT NOT NULL,
             control_wards_purch TEXT NOT NULL,
-            gold_earned	gold_spent TEXT NOT NULL,
+            gold_earned	TEXT NOT NULL,
+            gold_spent TEXT NOT NULL,
             minions_killed TEXT NOT NULL,
             neutral_minions_killed TEXT NOT NULL,
             neutral_minions_killed_in_team_jungle TEXT NOT NULL,
@@ -307,21 +344,30 @@ def game_misc_staging():
         """
 
     cur.execute(game_misc_create_sql)
+
+    columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
+    values = str(list(df.values[0])).replace("[", "").replace("]", "")
+
+    insert_sql = f"""INSERT INTO game_misc_staging ({columns}) VALUES({values});"""
+    cur.execute(insert_sql)
+
     conn.commit()
 
 
 def create_staging_tables():
     get_s3_files()
-    profile_staging()
-    favchamp_staging()
-    role_staging()
-    playswith_staging()
-    game_staging()
+    profile_staging(profile)
+    favchamp_staging(favchamps)
+    role_staging(roles)
+    playswith_staging(playswith)
+    game_staging(games_stats)
     game_dmg_staging()
     game_misc_staging()
 
 
-#
+def
+
+
 # cur = conn.cursor()
 #
 # insert_sql = f"""INSERT INTO profile_staging ({columns}) VALUES({values});"""
