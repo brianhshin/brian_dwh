@@ -19,7 +19,7 @@ I wanted to make my own ETL with the endstate being a database that is being con
 
   <img src="output/images/codtracker.png" height="500"/>
 
-  <img src="output/images/scraper.png" height="400"/> <img src="output/images/dataframes.png" height="400"/>
+  <img src="output/images/scraper.png" height="500"/> <img src="output/images/dataframes.png" height="500"/>
 
 
   + profile
