@@ -12,14 +12,19 @@ I wanted to make my own ETL with the endstate being a database that is being con
 
 ## Stages ##
 ### 1. Extractor
-~ brian_dwh/codwarzone/extractor/warzone_scraper_local.py
-This python script uses urllib requests (for static pages) and selenium on a chrome driver (for dynamic content) to pull profile and game stats from cod.tracker (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview) using BeautifulSoup and produces 3 pandas dataframes.
-+ profile
-  - a snapshot of my profile stats (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview)
-+ game_details
-  - the previewed game details from my match history (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/matches)
-+ game_stats
-  - the complete stats from a given game (https://cod.tracker.gg/warzone/match/14818358671278315261?handle=rickytan)
+
+- brian_dwh/codwarzone/extractor/warzone_scraper_local.py
+
+- This python script uses urllib requests (for static pages) and selenium on a chrome driver (for dynamic content) to pull profile and game stats from cod.tracker (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview) using BeautifulSoup and produces 3 pandas dataframes.
+
+  <img src="output/images/scraper.png" width="500" height="500"/>
+
+  + profile
+    - a snapshot of my profile stats (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview)
+  + game_details
+    - the previewed game details from my match history (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/matches)
+  + game_stats
+    - the complete stats from a given game (https://cod.tracker.gg/warzone/match/14818358671278315261?handle=rickytan)
 
 ### 2. RawData
 
