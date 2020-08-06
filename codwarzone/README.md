@@ -17,7 +17,10 @@ I wanted to make my own ETL with the endstate being a database that is being con
 
 - This python script uses urllib requests (for static pages) and selenium on a chrome driver (for dynamic content) to pull profile and game stats from cod.tracker (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview) using BeautifulSoup and produces 3 pandas dataframes.
 
-  <img src="output/images/scraper.png" width="500" height="500"/>
+  <img src="output/images/codtracker.png" height="500"/>
+
+  <img src="output/images/scraper.png" height="500"/> <img src="output/images/dataframes.png" height="500"/>
+
 
   + profile
     - a snapshot of my profile stats (https://cod.tracker.gg/warzone/profile/battlenet/gs25%2311901/overview)
