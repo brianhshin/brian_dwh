@@ -531,7 +531,7 @@ def get_game_dmg_data(game_soup):
 
 def get_game_data(game):
 
-    # game = '/match/na/3469404493#participant8'
+    # game = '/match/na/3470664186#participant8'
 
     game_participant = game.split('#')[1]
     game_soup = get_game_soup(game)
@@ -549,11 +549,11 @@ def get_game_data(game):
 
 ################################################################################
 
-def load_s3(s3_bucket, input_filename, output_filename):
-        s3 = boto3.resource('s3')
-        s3.meta.client.upload_file(input_filename, s3_bucket, output_filename)
-        print ('COMPLETE: ' + input_filename + ' loaded into s3://' +
-               s3_bucket + ' as ' + output_filename)
+# def load_s3(s3_bucket, input_filename, output_filename):
+#         s3 = boto3.resource('s3')
+#         s3.meta.client.upload_file(input_filename, s3_bucket, output_filename)
+#         print ('COMPLETE: ' + input_filename + ' loaded into s3://' +
+#                s3_bucket + ' as ' + output_filename)
 
 ################################################################################
 
@@ -624,7 +624,7 @@ def parse_leagueofgraphs():
         on=['legend', 'game_id'],
         how='left')
 
-    games_combined_df = game_basic_df.merge(
+    games_combined_df = games_basic_df.merge(
         games_stats_df,
         left_on=['game_id', 'legend'],
         right_on=['game_id', 'legend'],
@@ -642,14 +642,14 @@ def parse_leagueofgraphs():
     s3_bucket = 'leagueofgraphs'
 
     for final_df in final_dfs:
-        filename = '/home/ubuntu/ubuntu/brian_dwh/league/league_temp_output/'+final_df[0]+'.csv'
+        # filename = '/home/ubuntu/ubuntu/brian_dwh/league/league_temp_output/'+final_df[0]+'.csv'
+        filename = '/Users/brianshin/brian/work/repo/brian_dwh/league/output/'+final_df[0]+'.csv'
         file = final_df[1]
         output_filename = final_df[0]+'/'+final_df[0]+'_'+today+'.csv'
         file.to_csv(filename, index=False, encoding='utf-8')
-        load_s3(
-            s3_bucket=s3_bucket,
-            input_filename=filename,
-            output_filename=output_filename)
+        # load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
+
+
 
     time = (dt.datetime.now() - start_time)
     print("--- {} ---".format(dt.timedelta(seconds=time.seconds)))
