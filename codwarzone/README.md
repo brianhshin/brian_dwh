@@ -35,3 +35,12 @@ I wanted to make my own ETL with the endstate being a database that is consisten
 
 ### 3. Staging
 ### 4. Prod
+
+
+
+
+#### some misc notes and challenges ####
+
++ In creating the prod table, sqlite doesn't support having multiple keys in the ON CONFLICT clause. this makes things annoying because if I want to ingest the games of my friends, there can only be one row for a game. This means the game_id is no longer a unique primary key. I thought of making game_id as a hash of the game_id and the gamer_id, since that's the true unique constraint and grain of the game_details_dim and game_stats_dim table, but sqlite also doesn't have any hashing functions built in (was hoping for SHA1 or MD5). For now, I have a few possible solutions:
+  - game_id = game_id || "_" || gamer_id and separate column for game_url_id
+  - keep game_id and make new pk for game_details_id and game_stats_id of game_id = game_id || "_" || gamer_id 
