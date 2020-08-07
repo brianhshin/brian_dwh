@@ -5,7 +5,7 @@ I wanted to make my own ETL with the endstate being a database that is consisten
 
 
 ## Data Model ##
-|   |   |   |
+| will | fill  |  later |
 |---|---|---|
 |   |   |   |
 |   |   |   |
