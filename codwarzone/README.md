@@ -162,4 +162,4 @@ ON CONFLICT(game_details_id) DO UPDATE SET
   - game_id = game_id || "_" || gamer_id and separate column for game_url_id
   - keep game_id and make new pk for game_details_id and game_stats_id of game_id = game_id || "_" || gamer_id 
     - went with this one.
-  
++ Ideally, I wanted 3 different schemas (RawData, Staging, Prod) for these tables, but SQLite operates as one schema. So... I just made the tables clearly distinguishable.
