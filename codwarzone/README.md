@@ -41,6 +41,23 @@ I wanted to make my own ETL with the endstate being a database that is consisten
   + game_details_rawdata
   + game_stats_rawdata
 
+~~~~
+CREATE TABLE IF NOT EXISTS game_details_rawdata (
+  game_id TEXT NOT NULL,
+  game_date TEXT NOT NULL,
+  game_time TEXT NOT NULL,
+  gamer_id TEXT NOT NULL,
+  game_type TEXT NOT NULL,
+  placement TEXT NOT NULL,
+  kills TEXT NOT NULL,
+  cache_open TEXT NOT NULL,
+  damage TEXT NOT NULL,
+  damage_per_min TEXT NOT NULL
+);
+
+INSERT OR IGNORE INTO game_details_rawdata ({columns}) VALUES({values});
+~~~~
+
 ### 3. Staging
 
 - brian_dwh/codwarzone/staging/warzone_staging_local.py
@@ -51,6 +68,29 @@ I wanted to make my own ETL with the endstate being a database that is consisten
   + game_details_staging
   + game_stats_staging
 
+~~~~
+CREATE TABLE IF NOT EXISTS game_details_staging AS
+SELECT
+  CAST(game_id AS VARCHAR) AS game_id,
+  DATE(game_date) AS game_date,
+  CASE
+    WHEN INSTR(game_time, 'AM') > 0 AND INSTR(game_time, '12:') > 0
+      THEN TIME(REPLACE(REPLACE(game_time, ' AM', ''), '12:', '00:'))
+    WHEN INSTR(game_time, 'AM') > 0
+      THEN TIME(REPLACE(game_time, ' AM', ''))
+    ELSE TIME(REPLACE(game_time, ' PM', ''), '+12 hours')
+  END game_time,
+  CAST(gamer_id AS VARCHAR) AS gamer_id,
+  CAST(game_type AS VARCHAR) AS game_type,
+  CAST(placement AS INT) AS placement,
+  CAST(kills AS INT) AS kills,
+  CAST(cache_open AS INT) AS cache_open,
+    CAST(REPLACE(damage, ',','') AS INT) AS damage,
+    CAST(REPLACE(damage_per_min, ',','') AS FLOAT) AS damage_per_min
+FROM game_details_rawdata
+WHERE game_type != 'Warzone Rumble'
+; 
+~~~~
 
 ### 4. Prod
 
@@ -58,7 +98,55 @@ I wanted to make my own ETL with the endstate being a database that is consisten
 
 - The Prod(uction) layer is where I upsert all the data from the Staging layer into the final end state tables. By now, all logic and tweaks to the data have been made, and it's just about getting it into the prod tables correctly. To do this, I execute DDL commands to create all 3 tables with data types and primary keys defined. Then, I run the DML commands to upsert the data without allowing duplicate rows to happen. If there is a conflict on the primary key, then it updates the row, without adding a new row. I also added some metadata columns- created_timestamp and last_modified_timestamp.
 
+~~~~
+CREATE TABLE IF NOT EXISTS game_details_dim (
+  game_details_id VARCHAR PRIMARY KEY,
+  game_id VARCHAR NOT NULL,
+  game_date DATE NOT NULL,
+  game_time TIME NOT NULL,
+  gamer_id TEXT VARCHAR NULL,
+  game_type TEXT NOT NULL,
+  placement INT NOT NULL,
+  kills INT NOT NULL,
+  cache_open INT NOT NULL,
+  damage INT NOT NULL,
+  damage_per_min FLOAT NOT NULL,
+  last_modified_timestamp TIMESTAMP_TZ DEFAULT CURRENT_TIMESTAMP,
+  created_timestamp TIMESTAMP_TZ DEFAULT CURRENT_TIMESTAMP
+);
 
+INSERT INTO game_details_dim
+  SELECT
+        game_id || '_' || replace(gamer_id, '#', '_'),
+      game_id,
+      game_date,
+      game_time,
+      gamer_id,
+      game_type,
+      placement,
+      kills,
+      cache_open,
+      damage,
+      damage_per_min,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+  FROM game_details_staging
+  WHERE TRUE
+  ORDER BY game_date ASC, game_time ASC
+ON CONFLICT(game_details_id) DO UPDATE SET
+    game_id = excluded.game_id,
+  game_date = excluded.game_date,
+  game_time = excluded.game_time,
+  gamer_id = excluded.gamer_id,
+  game_type = excluded.game_type,
+  placement = excluded.placement,
+  kills = excluded.kills,
+  cache_open = excluded.cache_open,
+  damage = excluded.damage,
+  damage_per_min = excluded.damage_per_min,
+  last_modified_timestamp = CURRENT_TIMESTAMP
+;
+~~~~
 
 #### some misc notes and challenges ####
 
