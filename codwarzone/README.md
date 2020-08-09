@@ -89,8 +89,8 @@ SELECT
   CAST(placement AS INT) AS placement,
   CAST(kills AS INT) AS kills,
   CAST(cache_open AS INT) AS cache_open,
-    CAST(REPLACE(damage, ',','') AS INT) AS damage,
-    CAST(REPLACE(damage_per_min, ',','') AS FLOAT) AS damage_per_min
+  CAST(REPLACE(damage, ',','') AS INT) AS damage,
+  CAST(REPLACE(damage_per_min, ',','') AS FLOAT) AS damage_per_min
 FROM game_details_rawdata
 WHERE game_type != 'Warzone Rumble'
 ; 
@@ -140,7 +140,7 @@ INSERT INTO game_details_dim
   WHERE TRUE
   ORDER BY game_date ASC, game_time ASC
 ON CONFLICT(game_details_id) DO UPDATE SET
-    game_id = excluded.game_id,
+  game_id = excluded.game_id,
   game_date = excluded.game_date,
   game_time = excluded.game_time,
   gamer_id = excluded.gamer_id,
