@@ -42,6 +42,8 @@ I wanted to make my own ETL with the endstate being a database that is consisten
   + game_stats_rawdata
 
 ~~~~
+ex:
+
 CREATE TABLE IF NOT EXISTS game_details_rawdata (
   game_id TEXT NOT NULL,
   game_date TEXT NOT NULL,
@@ -69,6 +71,8 @@ INSERT OR IGNORE INTO game_details_rawdata ({columns}) VALUES({values});
   + game_stats_staging
 
 ~~~~
+ex:
+
 CREATE TABLE IF NOT EXISTS game_details_staging AS
 SELECT
   CAST(game_id AS VARCHAR) AS game_id,
@@ -99,6 +103,8 @@ WHERE game_type != 'Warzone Rumble'
 - The Prod(uction) layer is where I upsert all the data from the Staging layer into the final end state tables. By now, all logic and tweaks to the data have been made, and it's just about getting it into the prod tables correctly. To do this, I execute DDL commands to create all 3 tables with data types and primary keys defined. Then, I run the DML commands to upsert the data without allowing duplicate rows to happen. If there is a conflict on the primary key, then it updates the row, without adding a new row. I also added some metadata columns- created_timestamp and last_modified_timestamp.
 
 ~~~~
+ex:
+
 CREATE TABLE IF NOT EXISTS game_details_dim (
   game_details_id VARCHAR PRIMARY KEY,
   game_id VARCHAR NOT NULL,
