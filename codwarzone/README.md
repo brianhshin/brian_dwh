@@ -1,11 +1,11 @@
 # Call of Duty Warzone Stat Tracker #
 
 ### Intro ####
-I wanted to make my own ETL with the endstate being a database that is consistently being updated. I needed a constantly growing data source, so I chose to track my Call of Duty Warzone stats, since I've been playing a lot during quarantine. Also, I wanted to blur the lines between playing and working (after all, I need to play for the sake of new data lol). For now, I've made my database on SQLite to mostly test concepts out. As for the ETL itself, I've broken it down into 4 stages: the Extractor stage (scraping the data off cod.tracker with BeautifulSoup), the RawData stage (inserting the raw data as text to the db), the Staging stage (the transform layer), and finally the Production stage (upserting to the final tables).
+I wanted to make my own ETL with the endstate being a database that is consistently being updated. I needed a constantly growing data source, so I chose to track my Call of Duty Warzone stats, since I've been playing a lot during quarantine. Also, I wanted to blur the lines between playing and working (after all, I need to play for the sake of new data lol). For now, I've made my database on SQLite to mostly test concepts out. I kicked up an EC2 instance and an S3 bucket and successfully uploaded files to the S3 bucket insead of writing as local csv's, but I'm still looking into what DB to use on my VM. As for the ETL itself, I've broken it down into 4 stages: the Extractor stage (scraping the data off cod.tracker with BeautifulSoup), the RawData stage (inserting the raw data as text to the db), the Staging stage (the transform layer), and finally the Production stage (upserting to the final tables).
 
 
 ## Data Model ##
-| will | fill  |  later |
+| TBD |   |   |
 |---|---|---|
 |   |   |   |
 |   |   |   |
@@ -156,10 +156,11 @@ ON CONFLICT(game_details_id) DO UPDATE SET
 
 <img src="output/images/prod.png" width="875"/>
 
-#### some misc notes and challenges ####
+#### Notes ####
 
 + In creating the prod table, sqlite doesn't support having multiple keys in the ON CONFLICT clause. this makes things annoying because if I want to ingest the games of my friends, there can only be one row for a game. This means the game_id is no longer a unique primary key. I thought of making game_id as a hash of the game_id and the gamer_id, since that's the true unique constraint and grain of the game_details_dim and game_stats_dim table, but sqlite also doesn't have any hashing functions built in (was hoping for SHA1 or MD5). For now, I have a few possible solutions:
   - game_id = game_id || "_" || gamer_id and separate column for game_url_id
   - keep game_id and make new pk for game_details_id and game_stats_id of game_id = game_id || "_" || gamer_id 
     - went with this one.
 + Ideally, I wanted 3 different schemas (RawData, Staging, Prod) for these tables, but SQLite operates as one schema. So... I just made the tables clearly distinguishable.
++ Next steps would be setting up Airflow on my EC2 machine (ideally with Docker) and have these tasks orchestrated by an Airflow DAG instead of a cronjob. I'm also working towards moving the DB from SQLite to probably Postgres. Still tinkering and learning more about how to get these running on my own.
