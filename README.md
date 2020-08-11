@@ -1,1 +1,3 @@
-# shebears
+Brian Shin
+
+brianhesungshin@gmail.com
