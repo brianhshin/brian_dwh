@@ -164,3 +164,22 @@ ON CONFLICT(game_details_id) DO UPDATE SET
     - went with this one.
 + Ideally, I wanted 3 different schemas (RawData, Staging, Prod) for these tables, but SQLite operates as one schema. So... I just made the tables clearly distinguishable.
 + Next steps would be setting up Airflow on my EC2 machine (ideally with Docker) and have these tasks orchestrated by an Airflow DAG instead of a cronjob. I'm also working towards moving the DB from SQLite to probably Postgres. Still tinkering and learning more about how to get these running on my own.
+  - Currently running the shell script every night
+    ~~~
+    # codwarzone scraper set to 11:50 PM EST (03:50 AM GMT)
+    50 03 * * * shells/codwarzone_etl.sh
+    ~~~
+  - The shell script just runs each script in the ETL.
+    ~~~
+    #!/bin/bash
+    echo "running codwarzone_etl.sh for scraping warzone stats and building rawdata, staging, and prod tables."
+
+    cd ~/brian/work/repo/brian_dwh/codwarzone
+    python3 extractor/warzone_scraper_local.py
+    python3 rawdata/warzone_rawdata_local.py
+    python3 staging/warzone_staging_local.py
+    python3 prod/warzone_prod_local.py
+
+    echo "warzone etl done."
+    ~~~
+    
