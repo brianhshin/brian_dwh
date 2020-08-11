@@ -84,7 +84,7 @@ def profile_rawdata(conn, df):
 
     profile_create_sql = """
         CREATE TABLE IF NOT EXISTS profile_rawdata (
-            profile_id TEXT PRIMARY KEY,
+            profile_id TEXT NOT NULL,
             profile_date TEXT NOT NULL,
             gamer_id TEXT NOT NULL,
             playtime TEXT NOT NULL,
@@ -120,7 +120,6 @@ def profile_rawdata(conn, df):
         """
 
     cur.execute(profile_create_sql)
-
     columns = str(list(df.columns)).replace("'","").replace("'","").replace("[", "").replace("]", "")
 
     for i in range(df.shape[0]):
@@ -138,7 +137,7 @@ def game_details_rawdata(conn, df):
 
     game_details_create_sql = """
         CREATE TABLE IF NOT EXISTS game_details_rawdata (
-            game_id TEXT PRIMARY KEY,
+            game_id TEXT NOT NULL,
             game_date TEXT NOT NULL,
             game_time TEXT NOT NULL,
             gamer_id TEXT NOT NULL,
@@ -171,7 +170,7 @@ def game_stats_rawdata(conn, df):
 
     game_stats_create_sql = """
         CREATE TABLE IF NOT EXISTS game_stats_rawdata (
-            game_id TEXT PRIMARY KEY,
+            game_id TEXT NOT NULL,
             gamer_id TEXT NOT NULL,
             game_date TEXT NOT NULL,
             game_time TEXT NOT NULL,

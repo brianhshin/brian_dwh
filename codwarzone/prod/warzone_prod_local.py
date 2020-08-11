@@ -182,7 +182,8 @@ def game_details_dim(conn):
 
     game_details_create_sql = """
         CREATE TABLE IF NOT EXISTS game_details_dim (
-        	game_id VARCHAR PRIMARY KEY,
+        	game_details_id VARCHAR PRIMARY KEY,
+            game_id VARCHAR NOT NULL,
         	game_date DATE NOT NULL,
         	game_time TIME NOT NULL,
         	gamer_id TEXT VARCHAR NULL,
@@ -200,6 +201,7 @@ def game_details_dim(conn):
     game_details_prod_sql = """
         INSERT INTO game_details_dim
         	SELECT
+                game_id || '_' || replace(gamer_id, '#', '_'),
             	game_id,
             	game_date,
             	game_time,
@@ -215,7 +217,8 @@ def game_details_dim(conn):
         	FROM game_details_staging
         	WHERE TRUE
         	ORDER BY game_date ASC, game_time ASC
-        ON CONFLICT(game_id) DO UPDATE SET
+        ON CONFLICT(game_details_id) DO UPDATE SET
+            game_id = excluded.game_id,
         	game_date = excluded.game_date,
         	game_time = excluded.game_time,
         	gamer_id = excluded.gamer_id,
@@ -241,7 +244,8 @@ def game_stats_dim(conn):
 
     game_stats_create_sql = """
         CREATE TABLE IF NOT EXISTS game_stats_dim (
-        	game_id VARCHAR PRIMARY KEY,
+        	game_stats_id VARCHAR PRIMARY KEY,
+            game_id VARCHAR NOT NULL,
         	gamer_id VARCHAR NOT NULL,
         	game_date DATE NOT NULL,
         	game_time TIME NOT NULL,
@@ -286,50 +290,52 @@ def game_stats_dim(conn):
     game_stats_prod_sql = """
         INSERT INTO game_stats_dim
         	SELECT
-        	stats.game_id,
-        	stats.gamer_id,
-        	stats.game_date,
-        	stats.game_time,
-        	stats.kills,
-        	stats.deaths,
-        	stats.assists,
-        	stats.kd,
-        	stats.damage,
-        	stats.score,
-        	stats.score_per_min,
-        	stats.wall_bangs,
-        	stats.headshots,
-        	stats.reviver,
-        	stats.team_placement,
-        	stats.team_wiped,
-        	stats.time_played,
-        	stats.total_xp,
-        	stats.score_xp,
-        	stats.match_xp,
-        	stats.challenge_xp,
-        	stats.medal_xp,
-        	stats.bonus_xp,
-        	stats.misc_xp,
-        	stats.gulag_kills,
-        	stats.gulag_deaths,
-        	stats.distance_traveled,
-        	stats.percent_time_moving,
-        	stats.team_survival,
-        	stats.executions,
-        	stats.nearmisses,
-        	stats.kiosk_buy,
-        	stats.damage_taken,
-        	stats.mission_pickup_tablet,
-        	stats.last_stand_kill,
-        	stats.longest_streak,
-        	stats.cache_open,
-    		CURRENT_TIMESTAMP,
-    		CURRENT_TIMESTAMP
+                stats.game_id || '_' || replace(stats.gamer_id, '#', '_'),
+            	stats.game_id,
+            	stats.gamer_id,
+            	stats.game_date,
+            	stats.game_time,
+            	stats.kills,
+            	stats.deaths,
+            	stats.assists,
+            	stats.kd,
+            	stats.damage,
+            	stats.score,
+            	stats.score_per_min,
+            	stats.wall_bangs,
+            	stats.headshots,
+            	stats.reviver,
+            	stats.team_placement,
+            	stats.team_wiped,
+            	stats.time_played,
+            	stats.total_xp,
+            	stats.score_xp,
+            	stats.match_xp,
+            	stats.challenge_xp,
+            	stats.medal_xp,
+            	stats.bonus_xp,
+            	stats.misc_xp,
+            	stats.gulag_kills,
+            	stats.gulag_deaths,
+            	stats.distance_traveled,
+            	stats.percent_time_moving,
+            	stats.team_survival,
+            	stats.executions,
+            	stats.nearmisses,
+            	stats.kiosk_buy,
+            	stats.damage_taken,
+            	stats.mission_pickup_tablet,
+            	stats.last_stand_kill,
+            	stats.longest_streak,
+            	stats.cache_open,
+        		CURRENT_TIMESTAMP,
+        		CURRENT_TIMESTAMP
         	FROM game_stats_staging stats
         	LEFT JOIN game_details_staging details ON stats.game_id = details.game_id
         	WHERE TRUE
         	ORDER BY stats.game_date ASC, details.game_time ASC
-        ON CONFLICT(game_id) DO UPDATE SET
+        ON CONFLICT(game_stats_id) DO UPDATE SET
+            game_id = excluded.game_id,
         	gamer_id = excluded.gamer_id,
         	game_date = excluded.game_date,
         	game_time = excluded.game_time,

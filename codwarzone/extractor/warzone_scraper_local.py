@@ -378,9 +378,7 @@ def get_game_data(game):
         print('bad game page. thanks activision ¯\_(ツ)_/¯')
 
 ################################################################################
-
-# gamer_id = 'gs25#11901'
-
+# zhu li, do the thing
 def parse_warzone_tracker(gamer_id):
 
     start_time = dt.datetime.now()
@@ -449,9 +447,10 @@ def parse_warzone_tracker(gamer_id):
             print('parsing game:', game)
             game_stats = get_game_data(game)
             games_stats_all = pd.concat([games_stats_all, game_stats])
-        except IndexError:
-        # except:
-            print('bad match data. thanks activision. ¯\_(ツ)_/¯')
+        # except IndexError:
+        except Exception as ex:
+            print(f'bad match data. thanks activision. ¯\_(ツ)_/¯')
+            print(ex)
 
     games_stats_all.rename(
         columns={'Kills': 'kills',
