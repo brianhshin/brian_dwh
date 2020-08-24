@@ -2,7 +2,6 @@
 
 """
 author: Brian Shin
-date: 04.28.2020
 email: brianhesungshin@gmail.com
 """
 

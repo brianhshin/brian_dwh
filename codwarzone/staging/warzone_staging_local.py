@@ -2,7 +2,6 @@
 
 """
 author: Brian Shin
-date: 04.28.2020
 email: brianhesungshin@gmail.com
 """
 
@@ -10,7 +9,11 @@ email: brianhesungshin@gmail.com
 Builds staging tables for all CODWARZONE tables:
 (profile_staging, game_details_staging, game_stats_staging).
 script args can be passed through command line ex:
-python warzone_staging_local.py --drop_tables Y
+python warzone_staging_local.py
+
+This staging part should drop tables, so I commented out
+the drop_tables argument.
+
 """
 import os
 from datetime import datetime

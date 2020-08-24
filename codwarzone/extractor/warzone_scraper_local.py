@@ -1,6 +1,5 @@
 """
 author: Brian Shin
-date: 05.12.2020
 email: brianhesungshin@gmail.com
 """
 
@@ -8,8 +7,9 @@ email: brianhesungshin@gmail.com
   usage: python warzone_scraper.py [gamer_id (default is gs25#11901)]
 
   The purpose of this assignment is to scrape a warzone tracker profile with games.
-  The dataframes get written to s3 bucket warzone/dataframe/dataframe_date.csv.
-  (ex: warzone/profile/profile_20200513.csv)
+  This is a local version, so this will write to local csv's instead of my S3 bucket.
+  The dataframes get written to a local file warzone/dataframe/dataframe_date.csv.
+  (ex: warzone/profile/profile_20200803.csv).
 
 """
 
