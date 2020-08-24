@@ -86,12 +86,13 @@ def get_game_links_soup(gamer_id):
 
     gamer = gamer_id.replace('#', '%23')
     game_links_url = f'https://cod.tracker.gg/warzone/profile/battlenet/{gamer}/matches'
-    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/work/chromedriver')
+    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/tinker/drivers/chromedriver_mac')
     driver.get(game_links_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
     game_links_html = driver.page_source
     game_links_soup = bs(game_links_html, 'lxml')
+    driver.close()
 
     return game_links_soup
 
@@ -99,7 +100,7 @@ def get_game_links_soup(gamer_id):
 # takes in a game url and requests/pulls the soup using selenium with chrome driver
 def get_game_soup(game_url):
 
-    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/work/chromedriver')
+    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/tinker/drivers/chromedriver_mac')
     driver.get(game_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
@@ -552,8 +553,8 @@ def parse_warzone_tracker(gamer_id):
 
     for final_df in final_dfs:
         # for local
-        filename_historic = f'/Users/brianshin/brian/work/repo/brian_dwh/codwarzone/output/{final_df[0]}/{final_df[0]}_'+today_id.replace('-','')+'.csv'
-        filename = f'/Users/brianshin/brian/work/repo/brian_dwh/codwarzone/output/{final_df[0]}.csv'
+        filename_historic = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}/{final_df[0]}_'+today_id.replace('-','')+'.csv'
+        filename = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}.csv'
         file = final_df[1]
         output_filename = f'{final_df[0]}/{final_df[0]}_{today}.csv'
         file.to_csv(filename_historic, index=False, encoding='utf-8')
