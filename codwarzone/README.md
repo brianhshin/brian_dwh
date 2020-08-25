@@ -183,5 +183,5 @@ ON CONFLICT(game_details_id) DO UPDATE SET
     echo "warzone etl done."
     ~~~
 + I was able to write and read the dataframes to my S3 bucket from the AWS Free-Tier. I wanted to test it out, but wasn't sure about the Free-Tier storage caps, so I commented those lines out and just wrote to csv. But the S3 uploads and downloads worked great.
-  - <img src="https://i.imgur.com/Svy5aoQ.png" width="500"/>
+  - <img src="https://i.imgur.com/Svy5aoQ.png" width="300"/>
  
