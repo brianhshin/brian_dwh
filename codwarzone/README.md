@@ -163,7 +163,7 @@ ON CONFLICT(game_details_id) DO UPDATE SET
   - keep game_id and make new pk for game_details_id and game_stats_id of game_id = game_id || "_" || gamer_id 
     - went with this one.
 + Ideally, I wanted 3 different schemas (RawData, Staging, Prod) for these tables, but SQLite operates as one schema. So... I just made the tables clearly distinguishable.
-+ Next steps would be setting up Airflow on my EC2 machine (ideally with Docker) and have these tasks orchestrated by an Airflow DAG instead of a cronjob. I'm also working towards moving the DB from SQLite to probably Postgres. Still tinkering and learning more about how to get these running on my own.
++ Next steps would be setting up Airflow on my EC2 machine and have these tasks orchestrated by an Airflow DAG instead of a cronjob. I'm also working towards moving the DB from SQLite to probably Postgres. Still tinkering and learning more about how to get these running on my own.
   - Currently running the shell script every night
     ~~~
     # codwarzone scraper set to 11:50 PM EST (03:50 AM GMT)
@@ -182,4 +182,6 @@ ON CONFLICT(game_details_id) DO UPDATE SET
 
     echo "warzone etl done."
     ~~~
-    
++ I was able to write and read the dataframes to my S3 bucket from the AWS Free-Tier. I wanted to test it out, but wasn't sure about the Free-Tier storage caps, so I commented those lines out and just wrote to csv. But the S3 uploads and downloads worked great.
+  - <img src="https://i.imgur.com/Svy5aoQ.png" width="500"/>
+ 
