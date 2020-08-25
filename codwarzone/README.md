@@ -26,9 +26,9 @@ I wanted to make my own ETL with the endstate being a database that is consisten
 
 
   
-    <img src="output/images/codtracker.png" width="875"/>
+    <img src="https://i.imgur.com/nDGPnoQ.png" width="700"/>
 
-    <img src="output/images/scraper.png" height="500"/> <img src="output/images/dataframes.png" height="500"/>
+    <img src="https://i.imgur.com/27GkA18.png" width="700"/>
   
   
 ### 2. RawData
