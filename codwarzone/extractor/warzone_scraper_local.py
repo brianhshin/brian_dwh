@@ -50,10 +50,12 @@ s3_bucket = 'codwarzone'
 # session = boto3.Session(
 #             aws_access_key_id='',
 #             aws_secret_access_key='')
+
+
 s3 = boto3.client(
     's3',
-    aws_access_key_id='',
-    aws_secret_access_key=')
+    aws_access_key_id=os.environ('aws_access_key_id'),
+    aws_secret_access_key=os.environ('aws_secret_access_key'))
 
 ################################################################################
 # for loading dataframes to s3 bucket
