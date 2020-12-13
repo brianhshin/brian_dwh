@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup as bs
 from time import sleep
 from urllib.request import Request, urlopen
 from selenium import webdriver
-from pyvirtualdisplay import Display
+# from pyvirtualdisplay import Display
 from datetime import timedelta
 
 import pandas as pd
@@ -44,8 +44,8 @@ pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.max_rows', 1000)
 pd.set_option('display.max_columns', 1000)
 
-display = Display(visible=0, size=(800, 800))
-display.start()
+# display = Display(visible=0, size=(800, 800))
+# display.start()
 
 today = dt.datetime.now().strftime("%Y%m%d")
 today_id = dt.datetime.now().strftime("%Y-%m-%d")
@@ -64,7 +64,7 @@ s3 = boto3.client(
     aws_secret_access_key=os.environ['aws_secret_access_key'])
 
 # local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
-driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux_87'
 
 ################################################################################
 # for loading dataframes to s3 bucket
