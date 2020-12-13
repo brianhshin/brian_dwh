@@ -48,12 +48,12 @@ yesterday_id = (dt.datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 # log = logging.getLogger(__name__)
 s3_bucket = 'codwarzone'
 # session = boto3.Session(
-#             aws_access_key_id='AKIAICKJW2IDKLOYNPKA',
-#             aws_secret_access_key='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')
+#             aws_access_key_id='',
+#             aws_secret_access_key='')
 s3 = boto3.client(
     's3',
-    aws_access_key_id='AKIAICKJW2IDKLOYNPKA',
-    aws_secret_access_key='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')
+    aws_access_key_id='',
+    aws_secret_access_key=')
 
 ################################################################################
 # for loading dataframes to s3 bucket
