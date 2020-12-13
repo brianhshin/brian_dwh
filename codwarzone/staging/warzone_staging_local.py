@@ -22,10 +22,10 @@ import pandas as pd
 import numpy as np
 import datetime as dt
 import argparse
-
+from time import sleep
 
 today = dt.datetime.now().strftime("%Y-%m-%d")
-os.chdir('/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output')
+os.chdir('/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/current')
 
 def create_connection(drop=True):
   """
@@ -98,7 +98,7 @@ def profile_staging(conn):
         ;
         """
 
-    cur.execute(profile_staging_sql)
+    cur.executescript(profile_staging_sql)
     conn.commit()
     print('inserted values into profile_staging')
 
@@ -111,7 +111,32 @@ def game_details_staging(conn):
         CREATE TABLE IF NOT EXISTS game_details_staging AS
             SELECT
             	CAST(game_id AS VARCHAR) AS game_id,
-            	DATE(game_date) AS game_date,
+            	CASE
+            		WHEN SUBSTR(game_date, 0, 4) = 'Jan'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Jan ', '01-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Feb'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Feb ', '02-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Mar'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Mar ', '03-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Apr'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Apr ', '04-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'May'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'May ', '05-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Jun'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Jun ', '06-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Jul'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Jul ', '07-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Aug'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Aug ', '08-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Sep'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Sep ', '09-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Oct'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Oct ', '10-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Nov'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Nov ', '11-'))
+            		WHEN SUBSTR(game_date, 0, 4) = 'Dec'
+            			THEN DATE(STRFTIME('%Y','now') || '-' || REPLACE(game_date, 'Dec ', '12-'))
+            	END game_date,
             	CASE
             		WHEN INSTR(game_time, 'AM') > 0 AND INSTR(game_time, '12:') > 0
             			THEN TIME(REPLACE(REPLACE(game_time, ' AM', ''), '12:', '00:'))
@@ -124,14 +149,14 @@ def game_details_staging(conn):
             	CAST(placement AS INT) AS placement,
             	CAST(kills AS INT) AS kills,
             	CAST(cache_open AS INT) AS cache_open,
-                CAST(REPLACE(damage, ',','') AS INT) AS damage,
-                CAST(REPLACE(damage_per_min, ',','') AS FLOAT) AS damage_per_min
+            	CAST(REPLACE(damage, ',','') AS INT) AS damage,
+            	CAST(REPLACE(damage_per_min, ',','') AS FLOAT) AS damage_per_min
             FROM game_details_rawdata
-            WHERE game_type != 'Warzone Rumble'
+            WHERE game_type != 'Warzone Rumble';
         ;
         """
 
-    cur.execute(game_details_staging_sql)
+    cur.executescript(game_details_staging_sql)
     conn.commit()
     print('inserted values into game_details_staging')
 
@@ -143,48 +168,52 @@ def game_stats_staging(conn):
     game_stats_staging_sql = """
         CREATE TABLE IF NOT EXISTS game_stats_staging AS
             SELECT
-                CAST(game_id AS VARCHAR) AS game_id,
-                CAST(gamer_id AS VARCHAR) AS gamer_id,
-                DATE(game_date) AS game_date,
-                CAST(game_time AS VARCHAR) AS game_time,
-                CAST(kills AS INT) AS kills,
-                CAST(deaths AS INT) AS deaths,
-                CAST(assists AS INT) AS assists,
-                CAST(kd AS FLOAT) AS kd,
-                CAST(REPLACE(damage, ',','') AS INT) AS damage,
-                CAST(REPLACE(score, ',','') AS INT) AS score,
-                CAST(REPLACE(score_per_min, ',','') AS FLOAT) AS score_per_min,
-                CAST(wall_bangs AS INT) AS wall_bangs,
-                CAST(headshots AS INT) AS headshots,
-                CAST(reviver AS INT) AS reviver,
-                CAST(team_placement AS INT) AS team_placement,
-                CAST(time_played AS VARCHAR) AS time_played,
-                CAST(REPLACE(total_xp, ',','') AS INT) AS total_xp,
-                CAST(REPLACE(score_xp, ',','') AS INT) AS score_xp,
-                CAST(REPLACE(match_xp, ',','') AS INT) AS match_xp,
-                CAST(REPLACE(challenge_xp, ',','') AS INT) AS challenge_xp,
-                CAST(REPLACE(medal_xp, ',','') AS INT) AS medal_xp,
-                CAST(REPLACE(bonus_xp, ',','') AS INT) AS bonus_xp,
-                CAST(REPLACE(misc_xp, ',','') AS INT) AS misc_xp,
-                CAST(gulag_kills AS INT) AS gulag_kills,
-                CAST(gulag_deaths AS INT) AS gulag_deaths,
-                CAST(distance_traveled AS INT) AS distance_traveled,
-                CAST(REPLACE(percent_time_moving, ',', '') AS FLOAT) / 100 AS percent_time_moving,
-                CAST(team_survival AS VARCHAR) AS team_survival,
-                CAST(team_wiped AS INT) AS team_wiped,
-                CAST(executions AS INT) AS executions,
-                CAST(nearmisses AS INT) AS nearmisses,
-                CAST(kiosk_buy AS INT) AS kiosk_buy,
-                CAST(REPLACE(damage_taken, ',','') AS INT) AS damage_taken,
-                CAST(mission_pickup_tablet AS INT) AS mission_pickup_tablet,
-                CAST(last_stand_kill  AS INT) AS last_stand_kill,
-                CAST(longest_streak AS INT) AS longest_streak,
-                CAST(cache_open AS INT) AS cache_open
-            FROM game_stats_rawdata
+            	CAST(stats.game_id AS VARCHAR) AS game_id,
+            	CAST(gamer_id AS VARCHAR) AS gamer_id,
+            	DATE(details.game_date) as game_date,
+            	TIME(details.game_time) AS game_time,
+            	CAST(kills AS INT) AS kills,
+            	CAST(deaths AS INT) AS deaths,
+            	CAST(assists AS INT) AS assists,
+            	CAST(kd AS FLOAT) AS kd,
+            	CAST(REPLACE(damage, ',','') AS INT) AS damage,
+            	CAST(REPLACE(score, ',','') AS INT) AS score,
+            	CAST(REPLACE(score_per_min, ',','') AS FLOAT) AS score_per_min,
+            	CAST(wall_bangs AS INT) AS wall_bangs,
+            	CAST(headshots AS INT) AS headshots,
+            	CAST(reviver AS INT) AS reviver,
+            	CAST(team_placement AS INT) AS team_placement,
+            	CAST(time_played AS VARCHAR) AS time_played,
+            	CAST(REPLACE(total_xp, ',','') AS INT) AS total_xp,
+            	CAST(REPLACE(score_xp, ',','') AS INT) AS score_xp,
+            	CAST(REPLACE(match_xp, ',','') AS INT) AS match_xp,
+            	CAST(REPLACE(challenge_xp, ',','') AS INT) AS challenge_xp,
+            	CAST(REPLACE(medal_xp, ',','') AS INT) AS medal_xp,
+            	CAST(REPLACE(bonus_xp, ',','') AS INT) AS bonus_xp,
+            	CAST(REPLACE(misc_xp, ',','') AS INT) AS misc_xp,
+            	CAST(gulag_kills AS INT) AS gulag_kills,
+            	CAST(gulag_deaths AS INT) AS gulag_deaths,
+            	CAST(distance_traveled AS INT) AS distance_traveled,
+            	CAST(REPLACE(percent_time_moving, ',', '') AS FLOAT) / 100 AS percent_time_moving,
+            	CAST(team_survival AS VARCHAR) AS team_survival,
+            	CAST(team_wiped AS INT) AS team_wiped,
+            	CAST(executions AS INT) AS executions,
+            	CAST(nearmisses AS INT) AS nearmisses,
+            	CAST(kiosk_buy AS INT) AS kiosk_buy,
+            	CAST(REPLACE(damage_taken, ',','') AS INT) AS damage_taken,
+            	CAST(mission_pickup_tablet AS INT) AS mission_pickup_tablet,
+            	CAST(last_stand_kill  AS INT) AS last_stand_kill,
+            	CAST(longest_streak AS INT) AS longest_streak,
+            	CAST(cache_open AS INT) AS cache_open
+            FROM game_stats_rawdata stats
+            LEFT JOIN (
+            	SELECT game_id, game_time, game_date
+            	FROM game_details_staging) details
+            ON stats.game_id = details.game_id;
         ;
         """
 
-    cur.execute(game_stats_staging_sql)
+    cur.executescript(game_stats_staging_sql)
     conn.commit()
     print('inserted values into game_stats_staging')
 

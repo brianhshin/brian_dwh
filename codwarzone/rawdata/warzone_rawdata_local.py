@@ -19,34 +19,23 @@ import numpy as np
 import datetime as dt
 import argparse
 
-
 today = dt.datetime.now().strftime("%Y-%m-%d")
-os.chdir('/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output')
+os.chdir('/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/current')
 
-def get_local_files():
+def get_local_files(file):
 
-    profile = pd.read_csv('profile.csv')
-    game_details = pd.read_csv('game_details.csv')
-    # game_details = pd.read_csv('game_details_all_20200803.csv')
-    # game_stats = pd.read_csv('game_stats_historic_20200805.csv')
-    game_stats = pd.read_csv('game_stats.csv')
+    df = pd.read_csv(file)
+    df = df.fillna(0)
+    df.replace(np.nan, '0', inplace=True)
 
-    profile = profile.fillna(0)
-    game_details = game_details.fillna(0)
-    game_stats = game_stats.fillna(0)
+    game_data = ['game_details', 'game_stats']
 
-    profile.replace(np.nan, '0', inplace=True)
-    game_details.replace(np.nan, '0', inplace=True)
-    game_stats.replace(np.nan, '0', inplace=True)
+    if any(x in file for x in game_data):
+        df['game_id'] = df['game_id'].astype('str')
 
-    game_details['game_id'] = game_details['game_id'].astype('str')
-    game_stats['game_id'] = game_stats['game_id'].astype('str')
+    print(f'{file} df shape: {df.shape}')
 
-    print('profile shape:', profile.shape)
-    print('game_details shape:', game_details.shape)
-    print('game_stats shape:', game_stats.shape)
-
-    return profile, game_details, game_stats
+    return df
 
 
 def create_connection(drop=True):
@@ -171,8 +160,6 @@ def game_stats_rawdata(conn, df):
         CREATE TABLE IF NOT EXISTS game_stats_rawdata (
             game_id TEXT NOT NULL,
             gamer_id TEXT NOT NULL,
-            game_date TEXT NOT NULL,
-            game_time TEXT NOT NULL,
             kills TEXT NOT NULL,
             deaths TEXT NOT NULL,
             assists TEXT NOT NULL,
@@ -235,22 +222,45 @@ def drop_tables_arg():
 
 
 def create_rawdata_tables():
-    profile, game_details, game_stats = get_local_files()
-    profile_rawdata(conn, profile)
-    game_details_rawdata(conn, game_details)
-    game_stats_rawdata(conn, game_stats)
+
+    files = os.listdir()
+
+    for file in files:
+        if file.split('.')[1] != 'csv':
+            files.remove(file)
+
+        if 'profile' in file:
+            profile = get_local_files(file)
+            profile_rawdata(conn, profile)
+        elif 'game_details' in file:
+            game_details = get_local_files(file)
+            game_details_rawdata(conn, game_details)
+        elif 'game_stats' in file:
+            game_stats = get_local_files(file)
+            game_stats_rawdata(conn, game_stats)
+
     print('updated CODWARZONE.RAWDATA tables. itspizzatime.jpeg')
 
 
+def get_args():
+
+    parser = argparse.ArgumentParser(description='warzone_rawdata_local.py build rawdata tables for all CODWARZONE tables.')
+    parser.add_argument('--drop_tables', default='N', help='drop tables, or not (Y or N). default is N.')
+
+    args = parser.parse_args()
+
+    drop_tables = args.drop_tables.upper()
+
+    return drop_tables
 
 if __name__ == '__main__':
 
-    drop_tables = drop_tables_arg()
+    drop_tables = get_args()
 
     if drop_tables == 'Y':
         print('dropping tables.')
-        drop_check = input('Are you sure you want to drop all the tables in CODWARZONE.RAWDATA (y/n)? ')
-        if drop_check.lower() != 'y':
+        drop_check = input('Are you sure you want to drop all the tables in CODWARZONE.RAWDATA (Y/N)?')
+        if drop_check.upper() != 'Y':
             print('peace- cancelling script.')
             sys.exit()
         else:

@@ -32,6 +32,8 @@ import tempfile
 import boto3
 import datetime as dt
 import sys
+import argparse
+import logging
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -43,19 +45,34 @@ today = dt.datetime.now().strftime("%Y%m%d")
 today_id = dt.datetime.now().strftime("%Y-%m-%d")
 yesterday_id = (dt.datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
 
+# log = logging.getLogger(__name__)
+s3_bucket = 'codwarzone'
+# session = boto3.Session(
+#             aws_access_key_id='AKIAICKJW2IDKLOYNPKA',
+#             aws_secret_access_key='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')
+s3 = boto3.client(
+    's3',
+    aws_access_key_id='AKIAICKJW2IDKLOYNPKA',
+    aws_secret_access_key='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')
+
 ################################################################################
 # for loading dataframes to s3 bucket
-def load_s3(s3_bucket, input_filename, output_filename):
-        s3 = boto3.resource('s3')
-        s3.meta.client.upload_file(input_filename, s3_bucket, output_filename)
-        print ('COMPLETE: ' + input_filename + ' loaded into s3://' +
-               s3_bucket + ' as ' + output_filename)
+def s3_upload_file(data, bucket, filepath):
+    # logging.info(f'Exporting contents to file: {filepath}')
+    # s3_resource = session.resource('s3')
+    # obj = s3_resource.Object(bucket, filepath).put(Body=data)
+    s3.upload_file(data, bucket, filepath)
+    print(f'uploaded file as {bucket}/{filepath}')
 
+    return
 
 # gets text values from whatever you parse with beautifulsoup
 def parse_text(unparsed):
 
-    parsed = unparsed.get_text().lstrip('\n\r\n').lstrip('\n\r\n ').rstrip('\n\r\n').rstrip('\n\r\n ').strip(' ')
+    try:
+        parsed = unparsed.get_text().lstrip('\n\r\n').lstrip('\n\r\n ').rstrip('\n\r\n').rstrip('\n\r\n ').strip(' ')
+    except AttributeError:
+        parsed = 0
 
     return parsed
 
@@ -63,7 +80,10 @@ def parse_text(unparsed):
 # parses values from whatever tags you parse and how many levels down
 def parse_tag(unparsed, lvl):
 
-    parsed = str(unparsed).split('="')[lvl].split('">')[0].split('"')[0]
+    try:
+        parsed = str(unparsed).split('="')[lvl].split('">')[0].split('"')[0]
+    except AttributeError:
+        parsed = 0
 
     return parsed
 
@@ -124,7 +144,7 @@ def get_profile_data(profile_soup, gamer_id):
     level_parsed = parse_text(level).split('\n')[0]
 
     level_rank = profile_soup.find('div', attrs={'class':'highlight-text'})
-    level_rank_parsed = parse_text(level).split('\n            ')[1]
+    level_rank_parsed = parse_text(level).split('\n')[1].strip(' ')
 
     wins = profile_soup.findAll('div', attrs={'class':'numbers'})[0].find('span', attrs={'class':'value'})
     wins_parsed = parse_text(wins)
@@ -226,6 +246,7 @@ def get_profile_data(profile_soup, gamer_id):
                     'downs': [downs_parsed],
                     'avg_life': [avg_life_parsed],
                     'avg_life_rank': [avg_life_rank_parsed],
+                    'avg_life_rank': 0,
                     'score': [score_parsed],
                     'score_per_min': [score_per_min_parsed],
                     'score_per_min_rank': [score_per_min_rank_parsed],
@@ -245,20 +266,21 @@ def get_profile_data(profile_soup, gamer_id):
 # takes in the games list page soup and parses the game url's into a list
 def get_game_links(game_links_soup):
 
-    games = game_links_soup.findAll('div', attrs={'class': 'trn-gamereport-list__group'})
-    games_today = games[0].findAll('div', attrs={'class':'match__row'})
-    games_yesterday = games[1].findAll('div', attrs={'class':'match__row'})
 
-    games_today_len = len(games_today)
-    games_yesterday_len = len(games_yesterday)
+    games = game_links_soup.findAll('div', attrs={'class': 'trn-gamereport-list__group'})
+    games_most_recent = games[0].findAll('div', attrs={'class':'match__row'})
+    games_prior = games[1].findAll('div', attrs={'class':'match__row'})
+
+    games_most_recent_len = len(games_most_recent)
+    games_prior_len = len(games_prior)
     games_list = []
 
-    for i in range(games_today_len):
-        game = games_today[i].find('a')['href']
+    for i in range(games_most_recent_len):
+        game = games_most_recent[i].find('a')['href']
         games_list.append(game)
 
-    for i in range(games_yesterday_len):
-        game = games_yesterday[i].find('a')['href']
+    for i in range(games_prior_len):
+        game = games_prior[i].find('a')['href']
         games_list.append(game)
 
     return games_list
@@ -302,23 +324,27 @@ def get_game_details(game_links_soup, gamer_id):
     games_by_day = game_links_soup.findAll('div', attrs={'class': 'trn-gamereport-list__group'})
 
     games_details_all = pd.DataFrame()
-    # all games from today
-    games_for_day = games_by_day[0].findAll('div', attrs={'class':'match__row'})
-    # all games for yesterday
-    games_for_yesterday = games_by_day[1].findAll('div', attrs={'class':'match__row'})
+    # all games from most recent day
+    games_most_recent = games_by_day[0].findAll('div', attrs={'class':'match__row'})
+    # all games for prior day
+    games_prior = games_by_day[1].findAll('div', attrs={'class':'match__row'})
 
-    for x in range(len(games_for_day)):
-        game_details_df = get_game_details_for_day(games_for_day, x)
-        game_details_df['game_date'] = today_id
+    for x in range(len(games_most_recent)):
+        game_details_df = get_game_details_for_day(games_most_recent, x)
+        game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+        game_date_parsed = parse_text(game_date)
+        game_details_df.insert(loc=1, column='game_date', value=game_date_parsed)
         games_details_all = pd.concat([games_details_all, game_details_df])
 
-    for x in range(len(games_for_yesterday)):
-        game_details_df = get_game_details_for_day(games_for_yesterday, x)
-        game_details_df['game_date'] = yesterday_id
+    for x in range(len(games_prior)):
+        game_details_df = get_game_details_for_day(games_prior, x)
+        game_date = games_by_day[1].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+        game_date_parsed = parse_text(game_date)
+        game_details_df.insert(loc=1, column='game_date', value=game_date_parsed)
         games_details_all = pd.concat([games_details_all, game_details_df])
 
-    date_col = games_details_all.pop('game_date')
-    games_details_all.insert(loc=1, column='game_date', value=date_col)
+    # date_col = games_details_all.pop('game_date')
+    # games_details_all.insert(loc=1, column='game_date', value=date_col)
     games_details_all.insert(loc=2, column='gamer_id', value=gamer_id)
     games_details_all['game_type'] = np.where(
         games_details_all['game_type'] == '',
@@ -337,6 +363,7 @@ def get_game_stats_data(game_stats, i):
     value = parse_text(game_stats[i].find('span', attrs={'class': 'value'}))
 
     return stat, value
+
 ################################################################################
 # takes in a game url and pulls the soup with get_game_soup and parses the data into a dataframe
 def get_game_data(game):
@@ -347,10 +374,10 @@ def get_game_data(game):
     game_soup = get_game_soup(game_url)
 
     # parse timestamp of the game and split into date and time
-    game_timestamp = game_soup.find('span', {'class': 'time'})
-    game_time = parse_text(game_timestamp).split(', ')[1]
-    game_date = parse_text(game_timestamp).split(',')[0]
-    game_date_parsed = dt.datetime.strptime(game_date, "%m/%d/%Y").strftime("%Y-%m-%d")
+    # game_timestamp = game_soup.find('span', {'class': 'time'})
+    # game_time = parse_text(game_timestamp).split(', ')[1]
+    # game_date = parse_text(game_timestamp).split(',')[0]
+    # game_date_parsed = dt.datetime.strptime(game_date, "%m/%d/%Y").strftime("%Y-%m-%d")
     game_stats_soup = game_soup.find('div', {'class':'player__stats'})
 
     # try statement to parse the data from a given game bc sometimes the page request fails
@@ -366,17 +393,27 @@ def get_game_data(game):
 
         # create empty stats dict to add each game stat to it (diff games have diff # of stats. thanks activision)
         game_stats_dict = {
-            'game_date': game_date_parsed,
-            'game_time': game_time,
+            # 'game_date': game_date_parsed,
+            # 'game_time': game_time,
             'game_id': game_id}
         for stat in stats_list:
             game_stats_dict.update({stat[0]: [stat[1]]})
 
         game_stats_df = pd.DataFrame(game_stats_dict)
-        return game_stats_df
 
     except AttributeError:
+
         print('bad game page. thanks activision ¯\_(ツ)_/¯')
+
+        game_stats_dict = {
+            # 'game_date': game_date_parsed,
+            # 'game_time': game_time,
+            'game_id': game_id}
+
+        game_stats_df = pd.DataFrame(game_stats_dict)
+
+    return game_stats_df
+
 
 ################################################################################
 # zhu li, do the thing
@@ -384,6 +421,8 @@ def parse_warzone_tracker(gamer_id):
 
     start_time = dt.datetime.now()
     print('script started at:', start_time)
+
+    # gamer_id = 'gs25#11901'
 
     # pull profile soup
     profile_soup = get_profile_soup(gamer_id)
@@ -398,8 +437,8 @@ def parse_warzone_tracker(gamer_id):
     # create empty dataframe to populate with game stats
     games_stats_all = pd.DataFrame(
         columns = [
-            'game_date',
-            'game_time',
+            # 'game_date',
+            # 'game_time',
             'game_id',
             'Kills',
             'Medal Xp',
@@ -443,15 +482,15 @@ def parse_warzone_tracker(gamer_id):
 
     # iterate on game urls and parse data to append to empty df
     for game in games_list:
+        print('parsing game:', game)
         # try statement bc sometimes activision pulls bad data for game stats
         try:
-            print('parsing game:', game)
             game_stats = get_game_data(game)
             games_stats_all = pd.concat([games_stats_all, game_stats])
         # except IndexError:
         except Exception as ex:
-            print(f'bad match data. thanks activision. ¯\_(ツ)_/¯')
-            print(ex)
+            game_stats = get_game_data(game)
+            games_stats_all = pd.concat([games_stats_all, game_stats])
 
     games_stats_all.rename(
         columns={'Kills': 'kills',
@@ -498,8 +537,8 @@ def parse_warzone_tracker(gamer_id):
     # reorder the columns
     games_stats_all = games_stats_all[[
         'game_id',
-        'game_date',
-        'game_time',
+        # 'game_date',
+        # 'game_time',
         'kills',
         'deaths',
         'assists',
@@ -552,41 +591,39 @@ def parse_warzone_tracker(gamer_id):
     s3_bucket = 'codwarzone'
 
     for final_df in final_dfs:
-        # for local
-        filename_historic = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}/{final_df[0]}_'+today_id.replace('-','')+'.csv'
-        filename = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}.csv'
-        file = final_df[1]
-        output_filename = f'{final_df[0]}/{final_df[0]}_{today}.csv'
-        file.to_csv(filename_historic, index=False, encoding='utf-8')
-        file.to_csv(filename, index=False, encoding='utf-8')
-        # for s3
-        # load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
+        # # for local
+        # local_filename_archive = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}/{final_df[0]}_{gamer_id.replace('#', '_')}_'+today+'.csv'
+        # filename = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/{final_df[0]}.csv'
+        # file = final_df[1]
+        # output_filename = f'{final_df[0]}/{final_df[0]}_{today}.csv'
+        # file.to_csv(filename_historic, index=False, encoding='utf-8')
+        # file.to_csv(filename, index=False, encoding='utf-8')
+        # # for s3
+        # # load_s3(s3_bucket=s3_bucket, input_filename=filename, output_filename=output_filename)
+
+
+        archive_filename = f'{final_df[0]}_{gamer_id}_{today}.csv'.replace('#', '_')
+        current_filename = f'{final_df[0]}_{gamer_id}.csv'.replace('#', '_')
+        archive_local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/archive/{final_df[0]}/{archive_filename}'
+        current_local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/current/{current_filename}'
+
+        final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
+        final_df[1].to_csv(current_local_filepath, encoding='utf-8', index=False)
+
+        s3_upload_file(data = archive_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{archive_filename}')
+        s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'current/{current_filename}')
+
 
     time = (dt.datetime.now() - start_time)
     print("--- {} ---".format(dt.timedelta(seconds=time.seconds)))
 
 
-# for parsing the parameters when running the script (defaults gamer_id to me)
-def get_parameters():
-    # in the gamer_id, '#' becomes'%23'
-    user = sys.argv[1] if len(sys.argv) > 1 else 'gs25#11901'
-    user = user.lower()
-
-    return user
-
-# u know what it do
-if __name__ == '__main__':
-    # parse gamer_id from script parameters
-    gamer_id = get_parameters()
-    parse_warzone_tracker(gamer_id)
-
-################################################################################
-################################################################################
 # to get games from all days available on load screen, not just today
+def get_historic_game_details(backfill_path, gamer_id):
 
-def get_historic_game_details():
+    print('historic_soup_path: ', historic_soup_path)
 
-    with open('/Users/brianshin/brian/work/repo/brian_dwh/codwarzone/output/games_soup_20200805.txt') as f:
+    with open(historic_soup_path) as f:
         soup = bs(f, "html.parser")
 
     games_by_day = soup.findAll('div', attrs={'class': 'trn-gamereport-list__group'})
@@ -645,17 +682,23 @@ def get_historic_game_details():
                 game_detail_stats_df.insert(loc=1, column='game_date', value=today_id)
 
             games_details_all = pd.concat([game_detail_stats_df, games_details_all])
-    games_details_all.insert(loc=2, column='gamer_id', value='gs25#11901')
+    games_details_all.insert(loc=2, column='gamer_id', value=gamer_id)
     games_details_all.reset_index(inplace=True, drop=True)
 
-    games_details_all.to_csv('game_details_all_20200805.csv', encoding='utf-8', index=False)
+    filename = f'game_details_{gamer_id}_{today}.csv'
+    local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/game_details/{filename}'
+
+    games_details_all.to_csv(
+        local_filepath,
+        encoding='utf-8',
+        index=False)
+
+    s3_upload_file(data = local_filepath, bucket = s3_bucket, filepath = f'game_details/{filename}')
 
     return games_details_all
 
-def get_historic_game_stats():
 
-    start_time = dt.datetime.now()
-    print('script started at:', start_time)
+def get_historic_game_stats(games_details_all, gamer_id):
 
     # create empty dataframe to populate with game stats
     game_stats_historic = pd.DataFrame(
@@ -709,7 +752,7 @@ def get_historic_game_stats():
         counter = counter + 1
         print(counter)
 
-        game = f'/warzone/match/{game_id}?handle=rickytan'
+        game = f'/warzone/match/{game_id}?handle={gamer_id}'.split('#')[0].replace('zeroserker', 'Zeroserker').replace('yummkpop', 'Yummkpop')
 
         # try statement bc sometimes activision pulls bad data for game stats
         try:
@@ -807,12 +850,56 @@ def get_historic_game_stats():
         'cache_open']]
     game_stats_historic.insert(loc=1, column='gamer_id', value=gamer_id)
     game_stats_historic.reset_index(inplace=True, drop=True)
-    game_stats_historic.to_csv('game_stats_historic_20200805.csv', encoding='utf-8', index=False)
 
-    time = (dt.datetime.now() - start_time)
-    print("--- {} ---".format(dt.timedelta(seconds=time.seconds)))
+    filename = f'game_stats_{gamer_id}_{today}.csv'
+    local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/game_stats/{filename}'
+
+    game_stats_historic.to_csv(
+        local_filepath,
+        encoding='utf-8',
+        index=False)
+
+
+    s3_upload_file(data = local_filepath, bucket = s3_bucket, filepath = f'game_stats/{filename}')
 
     return game_stats_historic
 
-# games_details_all = get_historic_game_details()
-# games_stats_all = get_historic_game_stats()
+
+# for parsing the parameters when running the script (defaults gamer_id to me)
+def get_args():
+
+    parser = argparse.ArgumentParser(description='warzone_scraper_local.py scrapes warzone stats from cod.tracker.')
+    parser.add_argument('--gamer_id', default='gs25#11901', help='enter your warzone username. the default is me: gs25#11901.')
+    parser.add_argument('--is_backfill', default='N', help='do you want to pull historic data? Y for yes, N for no. default is N.')
+
+    args = parser.parse_args()
+
+    # are league usernames case sensitive?
+    gamer_id = args.gamer_id
+    is_backfill = args.is_backfill.upper()
+
+    return gamer_id, is_backfill
+################################################################################
+# u know what it do
+if __name__ == '__main__':
+    # parse gamer_id from script parameters
+    gamer_id, is_backfill = get_args()
+    # gamer_id = 'gs25#11901'
+    # is_historic = 'Y'
+    print('gamer_id:', gamer_id)
+    print('is_historic:', is_backfill)
+
+    if is_backfill == 'Y':
+
+        # backfill_username='gs25#11901'
+        # backfill_date='20201201'
+        backfill_username = input('enter username (ex: gs25#11901):')
+        backfill_date = input ('enter backfill date as yyyymmdd (ex: 20201201):')
+        backfill_filename = f'backfill_{backfill_username}_{backfill_date}.csv'.replace('#', '_')
+        backfill_path = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/archive/backfills/{backfill_filename}'
+
+        games_details_all = get_historic_game_details(backfill_path, gamer_id)
+        get_historic_game_stats(games_details_all, gamer_id)
+
+    else:
+        parse_warzone_tracker(gamer_id)

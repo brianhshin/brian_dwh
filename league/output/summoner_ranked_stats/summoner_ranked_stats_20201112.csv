@@ -1,0 +1,3 @@
+league_id,queue_type,tier,rank,summoner_id,summoner_name,league_points,wins,losses,is_veteran,is_inactive,is_freshblood,is_hotstreak
+4e338204-23f7-43c3-9efb-255c3e097d20,RANKED_FLEX_SR,BRONZE,I,_cabepNWPKIFoRr02pj7u1cMfI7UB-OwiBGR_anf6ycZ-xVa,rickyyytan,21.0,91.0,110.0,False,False,False,False
+340563df-8e3b-448c-948c-a4e4c7c52d41,RANKED_SOLO_5x5,SILVER,IV,_cabepNWPKIFoRr02pj7u1cMfI7UB-OwiBGR_anf6ycZ-xVa,rickyyytan,18.0,83.0,119.0,False,False,False,False

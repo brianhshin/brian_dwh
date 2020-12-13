@@ -1,0 +1,297 @@
+rune_id,rune_name,description,stats,tags,colloq,plaintext,is_rune,tier,type
+10001,Razer Mark of Precision,+2.23% critical damage,{'FlatCritDamageMod': 0.0223},"['physicalAttack', 'flat', 'mark']",,,True,3,red
+10002,Razer Quintessence of Speed,+1.5% movement speed,{'PercentMovementSpeedMod': 0.015},"['utility', 'percent', 'quintessence']",,,True,3,black
+5001,Lesser Mark of Attack Damage,+0.53 attack damage,{'FlatPhysicalDamageMod': 0.525},"['physicalAttack', 'flat', 'mark']",,,True,1,red
+5002,Lesser Mark of Scaling Attack Damage,+0.08 attack damage per level (+1.35 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.075},"['physicalAttack', 'perLevel', 'mark']",,,True,1,red
+5003,Lesser Mark of Attack Speed,+0.94% attack speed,{'PercentAttackSpeedMod': 0.0094},"['physicalAttack', 'percent', 'mark']",,,True,1,red
+5005,Lesser Mark of Critical Damage,+1.24% critical damage,{'FlatCritDamageMod': 0.0124},"['physicalAttack', 'flat', 'mark']",,,True,1,red
+5007,Lesser Mark of Critical Chance,+0.52% critical chance,{'FlatCritChanceMod': 0.0052},"['physicalAttack', 'flat', 'mark']",,,True,1,red
+5009,Lesser Mark of Lethality,+0.90 lethality,{},['mark'],,,True,1,red
+5011,Lesser Mark of Health,+1.93 health,{'FlatHPPoolMod': 1.9305},"['defense', 'flat', 'mark']",,,True,1,red
+5012,Lesser Mark of Scaling Health,+0.3 health per level (+5.4 at champion level 18),{'rFlatHPModPerLevel': 0.3005},"['defense', 'perLevel', 'mark']",,,True,1,red
+5013,Lesser Mark of Armor,+0.51 armor,{'FlatArmorMod': 0.508},"['defense', 'flat', 'mark']",,,True,1,red
+5015,Lesser Mark of Magic Resist,+0.43 magic resist,{'FlatSpellBlockMod': 0.43},"['defense', 'flat', 'mark']",,,True,1,red
+5016,Lesser Mark of Scaling Magic Resist,+0.04 magic resist per level (+0.72 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0412},"['defense', 'perLevel', 'mark']",,,True,1,red
+5021,Lesser Mark of Cooldown Reduction,-0.11% cooldowns,{'rPercentCooldownMod': -0.0011},"['utility', 'percent', 'mark']",,,True,1,red
+5023,Lesser Mark of Ability Power,+0.33 ability power,{'FlatMagicDamageMod': 0.33},"['magic', 'flat', 'mark']",,,True,1,red
+5024,Lesser Mark of Scaling Ability Power,+0.06 ability power per level (+1.08 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.0577},"['magic', 'perLevel', 'mark']",,,True,1,red
+5025,Lesser Mark of Mana,+3.28 mana,{'FlatMPPoolMod': 3.2813},"['magic', 'flat', 'mark']",,,True,1,red
+5026,Lesser Mark of Scaling Mana,+0.65 mana per level (+11.7 at champion level 18),{'rFlatMPModPerLevel': 0.6481},"['magic', 'perLevel', 'mark']",,,True,1,red
+5027,Lesser Mark of Mana Regeneration,+0.15 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0292},"['magic', 'flat', 'mark']",,,True,1,red
+5029,Lesser Mark of Magic Penetration,+0.49 magic penetration,{'rFlatMagicPenetrationMod': 0.49},"['magic', 'flat', 'mark']",,,True,1,red
+5031,Lesser Glyph of Attack Damage,+0.16 attack damage,{'FlatPhysicalDamageMod': 0.1575},"['physicalAttack', 'flat', 'glyph']",,,True,1,blue
+5032,Lesser Glyph of Scaling Attack Damage,+0.02 attack damage per level (+0.36 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0225},"['physicalAttack', 'perLevel', 'glyph']",,,True,1,blue
+5033,Lesser Glyph of Attack Speed,+0.35% attack speed,{'PercentAttackSpeedMod': 0.0035},"['physicalAttack', 'percent', 'glyph']",,,True,1,blue
+5035,Lesser Glyph of Critical Damage,+0.31% critical damage,{'FlatCritDamageMod': 0.0031},"['physicalAttack', 'flat', 'glyph']",,,True,1,blue
+5037,Lesser Glyph of Critical Chance,+0.15% critical chance,{'FlatCritChanceMod': 0.0015},"['physicalAttack', 'flat', 'glyph']",,,True,1,blue
+5041,Lesser Glyph of Health,+1.49 health,{'FlatHPPoolMod': 1.485},"['defense', 'flat', 'glyph']",,,True,1,blue
+5042,Lesser Glyph of Scaling Health,+0.3 health per level (+5.4 at champion level 18),{'rFlatHPModPerLevel': 0.3005},"['defense', 'perLevel', 'glyph']",,,True,1,blue
+5043,Lesser Glyph of Armor,+0.39 armor,{'FlatArmorMod': 0.3908},"['defense', 'flat', 'glyph']",,,True,1,blue
+5045,Lesser Glyph of Magic Resist,+0.74 magic resist,{'FlatSpellBlockMod': 0.74},"['defense', 'flat', 'glyph']",,,True,1,blue
+5046,Lesser Glyph of Scaling Magic Resist,+0.09 magic resist per level (+1.68 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0933},"['defense', 'perLevel', 'glyph']",,,True,1,blue
+5047,Lesser Glyph of Health Regeneration,+0.15 health regen / 5 sec.,{'FlatHPRegenMod': 0.03},"['defense', 'flat', 'glyph']",,,True,1,blue
+5051,Lesser Glyph of Cooldown Reduction,-0.47% cooldowns,{'rPercentCooldownMod': -0.0047},"['utility', 'percent', 'glyph']",,,True,1,blue
+5052,Lesser Glyph of Scaling Cooldown Reduction,-0.05% cooldowns per level (-0.93% at champion level 18),{'rPercentCooldownModPerLevel': -0.0005},"['utility', 'percent', 'perLevel', 'glyph']",,,True,1,blue
+5053,Lesser Glyph of Ability Power,+0.66 ability power,{'FlatMagicDamageMod': 0.66},"['magic', 'flat', 'glyph']",,,True,1,blue
+5054,Lesser Glyph of Scaling Ability Power,+0.1 ability power per level (+1.8 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.0962},"['magic', 'perLevel', 'glyph']",,,True,1,blue
+5055,Lesser Glyph of Mana,+6.25 mana,{'FlatMPPoolMod': 6.25},"['magic', 'flat', 'glyph']",,,True,1,blue
+5056,Lesser Glyph of Scaling Mana,+0.79 mana per level (+14.22 at champion level 18),{'rFlatMPModPerLevel': 0.787},"['magic', 'perLevel', 'glyph']",,,True,1,blue
+5057,Lesser Glyph of Mana Regeneration,+0.19 mana regen / 5 sec.,{'FlatMPRegenMod': 0.038},"['magic', 'flat', 'glyph']",,,True,1,blue
+5058,Lesser Glyph of Scaling Mana Regeneration,+0.04 mana regen / 5 sec. per level (+0.67 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0074},"['magic', 'perLevel', 'glyph']",,,True,1,blue
+5059,Lesser Glyph of Magic Penetration,+0.35 magic penetration,{'rFlatMagicPenetrationMod': 0.35},"['magic', 'flat', 'glyph']",,,True,1,blue
+5061,Lesser Seal of Attack Damage,+0.24 attack damage,{'FlatPhysicalDamageMod': 0.2364},"['physicalAttack', 'flat', 'seal']",,,True,1,yellow
+5062,Lesser Seal of Scaling Attack Damage,+0.03 attack damage per level (+0.61 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0338},"['physicalAttack', 'perLevel', 'seal']",,,True,1,yellow
+5063,Lesser Seal of Attack Speed,+0.42% attack speed,{'PercentAttackSpeedMod': 0.0042},"['physicalAttack', 'percent', 'seal']",,,True,1,yellow
+5065,Lesser Seal of Critical Damage,+0.43% critical damage,{'FlatCritDamageMod': 0.0043},"['physicalAttack', 'flat', 'seal']",,,True,1,yellow
+5067,Lesser Seal of Critical Chance,+0.23% critical chance,{'FlatCritChanceMod': 0.0023},"['physicalAttack', 'flat', 'seal']",,,True,1,yellow
+5071,Lesser Seal of Health,+4.48 health,{'FlatHPPoolMod': 4.48},"['defense', 'flat', 'seal']",,,True,1,yellow
+5072,Lesser Seal of Scaling Health,+0.75 health per level (+13.44 at champion level 18),{'rFlatHPModPerLevel': 0.7467},"['defense', 'perLevel', 'seal']",,,True,1,yellow
+5073,Lesser Seal of Armor,+0.56 armor,{'FlatArmorMod': 0.56},"['defense', 'flat', 'seal']",,,True,1,yellow
+5074,Lesser Seal of Scaling Armor,+0.09 armor per level (+1.68 at champion level 18),{'rFlatArmorModPerLevel': 0.0933},"['defense', 'perLevel', 'seal']",,,True,1,yellow
+5075,Lesser Seal of Magic Resist,+0.41 magic resist,{'FlatSpellBlockMod': 0.4125},"['defense', 'flat', 'seal']",,,True,1,yellow
+5076,Lesser Seal of Scaling Magic Resist,+0.05 magic resist per level (+0.9 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0536},"['defense', 'perLevel', 'seal']",,,True,1,yellow
+5077,Lesser Seal of Health Regeneration,+0.31 health regen / 5 sec.,{'FlatHPRegenMod': 0.062},"['defense', 'flat', 'seal']",,,True,1,yellow
+5078,Lesser Seal of Scaling Health Regeneration,+0.06 health regen / 5 sec. per level (+1.08 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0125},"['defense', 'perLevel', 'seal']",,,True,1,yellow
+5081,Lesser Seal of Cooldown Reduction,-0.2% cooldowns,{'rPercentCooldownMod': -0.002},"['utility', 'percent', 'seal']",,,True,1,yellow
+5083,Lesser Seal of Ability Power,+0.33 ability power,{'FlatMagicDamageMod': 0.33},"['magic', 'flat', 'seal']",,,True,1,yellow
+5084,Lesser Seal of Scaling Ability Power,+0.06 ability power per level (+1.08 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.0577},"['magic', 'perLevel', 'seal']",,,True,1,yellow
+5085,Lesser Seal of Mana,+3.83 mana,{'FlatMPPoolMod': 3.8281},"['magic', 'flat', 'seal']",,,True,1,yellow
+5086,Lesser Seal of Scaling Mana,+0.65 mana per level (+11.7 at champion level 18),{'rFlatMPModPerLevel': 0.6481},"['magic', 'perLevel', 'seal']",,,True,1,yellow
+5087,Lesser Seal of Mana Regeneration,+0.23 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0451},"['magic', 'flat', 'seal']",,,True,1,yellow
+5088,Lesser Seal of Scaling Mana Regeneration,+0.036 mana regen / 5 sec. per level (+0.65 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0072},"['magic', 'perLevel', 'seal']",,,True,1,yellow
+5091,Lesser Quintessence of Attack Damage,+1.25 attack damage,{'FlatPhysicalDamageMod': 1.25},"['physicalAttack', 'flat', 'quintessence']",,,True,1,black
+5092,Lesser Quintessence of Scaling Attack Damage,+0.14 attack damage per level (+2.52 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.1389},"['physicalAttack', 'perLevel', 'quintessence']",,,True,1,black
+5093,Lesser Quintessence of Attack Speed,+2.52% attack speed,{'PercentAttackSpeedMod': 0.0252},"['physicalAttack', 'percent', 'quintessence']",,,True,1,black
+5095,Lesser Quintessence of Critical Damage,+2.48% critical damage,{'FlatCritDamageMod': 0.0248},"['physicalAttack', 'flat', 'quintessence']",,,True,1,black
+5097,Lesser Quintessence of Critical Chance,+1.03% critical chance,{'FlatCritChanceMod': 0.0103},"['physicalAttack', 'flat', 'quintessence']",,,True,1,black
+5099,Lesser Quintessence of Lethality,+1.78 lethality,{},['quintessence'],,,True,1,black
+5101,Lesser Quintessence of Health,+14.5 health,{'FlatHPPoolMod': 14.5},"['defense', 'flat', 'quintessence']",,,True,1,black
+5102,Lesser Quintessence of Scaling Health,+1.5 health per level (+27 at champion level 18),{'rFlatHPModPerLevel': 1.5024},"['defense', 'perLevel', 'quintessence']",,,True,1,black
+5103,Lesser Quintessence of Armor,+2.37 armor,{'FlatArmorMod': 2.3684},"['defense', 'flat', 'quintessence']",,,True,1,black
+5104,Lesser Quintessence of Scaling Armor,+0.21 armor per level (+3.78 at champion level 18),{'rFlatArmorModPerLevel': 0.2083},"['defense', 'perLevel', 'quintessence']",,,True,1,black
+5105,Lesser Quintessence of Magic Resist,+2.22 magic resist,{'FlatSpellBlockMod': 2.22},"['defense', 'flat', 'quintessence']",,,True,1,black
+5106,Lesser Quintessence of Scaling Magic Resist,+0.21 magic resist per level (+3.78 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.2062},"['defense', 'perLevel', 'quintessence']",,,True,1,black
+5107,Lesser Quintessence of Health Regeneration,+1.5 health regen / 5 sec.,{'FlatHPRegenMod': 0.3},"['defense', 'flat', 'quintessence']",,,True,1,black
+5108,Lesser Quintessence of Scaling Health Regeneration,+0.16 health regen / 5 sec. per level (+2.88 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0313},"['defense', 'perLevel', 'quintessence']",,,True,1,black
+5111,Lesser Quintessence of Cooldown Reduction,-1.4% cooldowns,{'rPercentCooldownMod': -0.014},"['utility', 'percent', 'quintessence']",,,True,1,black
+5112,Lesser Quintessence of Scaling Cooldown Reduction,-0.15% cooldowns per level (-2.8% at champion level 18),{'rPercentCooldownModPerLevel': -0.0016},"['utility', 'percent', 'perLevel', 'quintessence']",,,True,1,black
+5113,Lesser Quintessence of Ability Power,+2.75 ability power,{'FlatMagicDamageMod': 2.75},"['magic', 'flat', 'quintessence']",,,True,1,black
+5114,Lesser Quintessence of Scaling Ability Power,+0.24 ability power per level (+4.32 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.2404},"['magic', 'perLevel', 'quintessence']",,,True,1,black
+5115,Lesser Quintessence of Mana,+20.83 mana,{'FlatMPPoolMod': 20.8333},"['magic', 'flat', 'quintessence']",,,True,1,black
+5116,Lesser Quintessence of Scaling Mana,+2.31 mana per level (+41.58 at champion level 18),{'rFlatMPModPerLevel': 2.3148},"['magic', 'perLevel', 'quintessence']",,,True,1,black
+5117,Lesser Quintessence of Mana Regeneration,+0.69 mana regen / 5 sec.,{'FlatMPRegenMod': 0.1389},"['magic', 'flat', 'quintessence']",,,True,1,black
+5118,Lesser Quintessence of Scaling Mana Regeneration,+0.14 mana regen / 5 sec. per level (+2.52 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0271},"['magic', 'perLevel', 'quintessence']",,,True,1,black
+5119,Lesser Quintessence of Magic Penetration,+1.11 magic penetration,{'rFlatMagicPenetrationMod': 1.11},"['magic', 'flat', 'quintessence']",,,True,1,black
+5121,Lesser Quintessence of Movement Speed,+0.83% movement speed,{'PercentMovementSpeedMod': 0.0083},"['utility', 'percent', 'quintessence']",,,True,1,black
+5123,Mark of Attack Damage,+0.74 attack damage,{'FlatPhysicalDamageMod': 0.735},"['physicalAttack', 'flat', 'mark']",,,True,2,red
+5124,Mark of Scaling Attack Damage,+0.1 attack damage per level (+1.89 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.105},"['physicalAttack', 'perLevel', 'mark']",,,True,2,red
+5125,Mark of Attack Speed,+1.32% attack speed,{'PercentAttackSpeedMod': 0.0132},"['physicalAttack', 'percent', 'mark']",,,True,2,red
+5127,Mark of Critical Damage,+1.74% critical damage,{'FlatCritDamageMod': 0.0174},"['physicalAttack', 'flat', 'mark']",,,True,2,red
+5129,Mark of Critical Chance,+0.72% critical chance,{'FlatCritChanceMod': 0.0072},"['physicalAttack', 'flat', 'mark']",,,True,2,red
+5131,Mark of Lethality,+1.25 lethality,{},['mark'],,,True,2,red
+5133,Mark of Health,+2.7 health,{'FlatHPPoolMod': 2.7027},"['defense', 'flat', 'mark']",,,True,2,red
+5134,Mark of Scaling Health,+0.42 health per level (+7.56 at champion level 18),{'rFlatHPModPerLevel': 0.4207},"['defense', 'perLevel', 'mark']",,,True,2,red
+5135,Mark of Armor,+0.71 armor,{'FlatArmorMod': 0.7112},"['defense', 'flat', 'mark']",,,True,2,red
+5137,Mark of Magic Resist,+0.6 magic resist,{'FlatSpellBlockMod': 0.6},"['defense', 'flat', 'mark']",,,True,2,red
+5138,Mark of Scaling Magic Resist,+0.06 magic resist per level (+1.08 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0577},"['defense', 'perLevel', 'mark']",,,True,2,red
+5143,Mark of Cooldown Reduction,-0.16% cooldowns,{'rPercentCooldownMod': -0.0016},"['utility', 'percent', 'mark']",,,True,2,red
+5145,Mark of Ability Power,+0.46 ability power,{'FlatMagicDamageMod': 0.462},"['magic', 'flat', 'mark']",,,True,2,red
+5146,Mark of Scaling Ability Power,+0.08 ability power per level (+1.44 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.0808},"['magic', 'perLevel', 'mark']",,,True,2,red
+5147,Mark of Mana,+4.59 mana,{'FlatMPPoolMod': 4.5938},"['magic', 'flat', 'mark']",,,True,2,red
+5148,Mark of Scaling Mana,+0.91 mana per level (+16.38 at champion level 18),{'rFlatMPModPerLevel': 0.9074},"['magic', 'perLevel', 'mark']",,,True,2,red
+5149,Mark of Mana Regeneration,+0.2 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0408},"['magic', 'flat', 'mark']",,,True,2,red
+5151,Mark of Magic Penetration,+0.68 magic penetration,{'rFlatMagicPenetrationMod': 0.68},"['magic', 'flat', 'mark']",,,True,2,red
+5153,Glyph of Attack Damage,+0.22 attack damage,{'FlatPhysicalDamageMod': 0.2205},"['physicalAttack', 'flat', 'glyph']",,,True,2,blue
+5154,Glyph of Scaling Attack Damage,+0.03 attack damage per level (+0.57 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0315},"['physicalAttack', 'perLevel', 'glyph']",,,True,2,blue
+5155,Glyph of Attack Speed,+0.5% attack speed,{'PercentAttackSpeedMod': 0.005},"['physicalAttack', 'percent', 'glyph']",,,True,2,blue
+5157,Glyph of Critical Damage,+0.43% critical damage,{'FlatCritDamageMod': 0.0043},"['physicalAttack', 'flat', 'glyph']",,,True,2,blue
+5159,Glyph of Critical Chance,+0.22% critical chance,{'FlatCritChanceMod': 0.0022},"['physicalAttack', 'flat', 'glyph']",,,True,2,blue
+5163,Glyph of Health,+2.08 health,{'FlatHPPoolMod': 2.079},"['defense', 'flat', 'glyph']",,,True,2,blue
+5164,Glyph of Scaling Health,+0.42 health per level (+7.56 at champion level 18),{'rFlatHPModPerLevel': 0.4207},"['defense', 'perLevel', 'glyph']",,,True,2,blue
+5165,Glyph of Armor,+0.55 armor,{'FlatArmorMod': 0.5471},"['defense', 'flat', 'glyph']",,,True,2,blue
+5167,Glyph of Magic Resist,+1.04 magic resist,{'FlatSpellBlockMod': 1.04},"['defense', 'flat', 'glyph']",,,True,2,blue
+5168,Glyph of Scaling Magic Resist,+0.13 magic resist per level (+2.34 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.13},"['defense', 'perLevel', 'glyph']",,,True,2,blue
+5169,Glyph of Health Regeneration,+0.21 health regen / 5 sec.,{'FlatHPRegenMod': 0.042},"['defense', 'flat', 'glyph']",,,True,2,blue
+5173,Glyph of Cooldown Reduction,-0.67% cooldowns,{'rPercentCooldownMod': -0.0067},"['utility', 'percent', 'glyph']",,,True,2,blue
+5174,Glyph of Scaling Cooldown Reduction,-0.07% cooldowns per level (-1.3% at champion level 18),{'rPercentCooldownModPerLevel': -0.0007},"['utility', 'percent', 'perLevel', 'glyph']",,,True,2,blue
+5175,Glyph of Ability Power,+0.92 ability power,{'FlatMagicDamageMod': 0.92},"['magic', 'flat', 'glyph']",,,True,2,blue
+5176,Glyph of Scaling Ability Power,+0.13 ability power per level (+2.34 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.1346},"['magic', 'perLevel', 'glyph']",,,True,2,blue
+5177,Glyph of Mana,+8.75 mana,{'FlatMPPoolMod': 8.75},"['magic', 'flat', 'glyph']",,,True,2,blue
+5178,Glyph of Scaling Mana,+1.1 mana per level (+19.8 at champion level 18),{'rFlatMPModPerLevel': 1.1019},"['magic', 'perLevel', 'glyph']",,,True,2,blue
+5179,Glyph of Mana Regeneration,+0.26 mana regen / 5 sec.,{'FlatMPRegenMod': 0.052},"['magic', 'flat', 'glyph']",,,True,2,blue
+5180,Glyph of Scaling Mana Regeneration,+0.05 mana regen / 5 sec. per level (+0.94 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0104},"['magic', 'perLevel', 'glyph']",,,True,2,blue
+5181,Glyph of Magic Penetration,+0.49 magic penetration,{'rFlatMagicPenetrationMod': 0.49},"['magic', 'flat', 'glyph']",,,True,2,blue
+5183,Seal of Attack Damage,+0.33 attack damage,{'FlatPhysicalDamageMod': 0.3309},"['physicalAttack', 'flat', 'seal']",,,True,2,yellow
+5184,Seal of Scaling Attack Damage,+0.05 attack damage per level (+0.85 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0473},"['physicalAttack', 'perLevel', 'seal']",,,True,2,yellow
+5185,Seal of Attack Speed,+0.59% attack speed,{'PercentAttackSpeedMod': 0.0059},"['physicalAttack', 'percent', 'seal']",,,True,2,yellow
+5187,Seal of Critical Damage,+0.61% critical damage,{'FlatCritDamageMod': 0.0061},"['physicalAttack', 'flat', 'seal']",,,True,2,yellow
+5189,Seal of Critical Chance,+0.32% critical chance,{'FlatCritChanceMod': 0.0032},"['physicalAttack', 'flat', 'seal']",,,True,2,yellow
+5193,Seal of Health,+6.24 health,{'FlatHPPoolMod': 6.24},"['defense', 'flat', 'seal']",,,True,2,yellow
+5194,Seal of Scaling Health,+1.04 health per level (+18.72 at champion level 18),{'rFlatHPModPerLevel': 1.04},"['defense', 'perLevel', 'seal']",,,True,2,yellow
+5195,Seal of Armor,+0.78 armor,{'FlatArmorMod': 0.78},"['defense', 'flat', 'seal']",,,True,2,yellow
+5196,Seal of Scaling Armor,+0.13 armor per level (+2.34 at champion level 18),{'rFlatArmorModPerLevel': 0.13},"['defense', 'perLevel', 'seal']",,,True,2,yellow
+5197,Seal of Magic Resist,+0.58 magic resist,{'FlatSpellBlockMod': 0.5775},"['defense', 'flat', 'seal']",,,True,2,yellow
+5198,Seal of Scaling Magic Resist,+0.08 magic resist per level (+1.44 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.075},"['defense', 'perLevel', 'seal']",,,True,2,yellow
+5199,Seal of Health Regeneration,+0.43 health regen / 5 sec.,{'FlatHPRegenMod': 0.086},"['defense', 'flat', 'seal']",,,True,2,yellow
+5200,Seal of Scaling Health Regeneration,+0.09 health regen / 5 sec. per level (+1.62 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0175},"['defense', 'perLevel', 'seal']",,,True,2,yellow
+5203,Seal of Cooldown Reduction,-0.29% cooldowns,{'rPercentCooldownMod': -0.0029},"['utility', 'percent', 'seal']",,,True,2,yellow
+5205,Seal of Ability Power,+0.46 ability power,{'FlatMagicDamageMod': 0.462},"['magic', 'flat', 'seal']",,,True,2,yellow
+5206,Seal of Scaling Ability Power,+0.08 ability power per level (+1.44 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.0808},"['magic', 'perLevel', 'seal']",,,True,2,yellow
+5207,Seal of Mana,+5.36 mana,{'FlatMPPoolMod': 5.3594},"['magic', 'flat', 'seal']",,,True,2,yellow
+5208,Seal of Scaling Mana,+0.91 mana per level (+16.38 at champion level 18),{'rFlatMPModPerLevel': 0.9074},"['magic', 'perLevel', 'seal']",,,True,2,yellow
+5209,Seal of Mana Regeneration,+0.32 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0632},"['magic', 'flat', 'seal']",,,True,2,yellow
+5210,Seal of Scaling Mana Regeneration,+0.05 mana regen / 5 sec. per level (+0.9 at champion level 18),{'rFlatMPRegenModPerLevel': 0.01},"['magic', 'perLevel', 'seal']",,,True,2,yellow
+5213,Quintessence of Attack Damage,+1.75 attack damage,{'FlatPhysicalDamageMod': 1.75},"['physicalAttack', 'flat', 'quintessence']",,,True,2,black
+5214,Quintessence of Scaling Attack Damage,+0.19 attack damage per level (+3.42 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.1944},"['physicalAttack', 'perLevel', 'quintessence']",,,True,2,black
+5215,Quintessence of Attack Speed,+3.51% attack speed,{'PercentAttackSpeedMod': 0.0351},"['physicalAttack', 'percent', 'quintessence']",,,True,2,black
+5217,Quintessence of Critical Damage,+3.47% critical damage,{'FlatCritDamageMod': 0.0347},"['physicalAttack', 'flat', 'quintessence']",,,True,2,black
+5219,Quintessence of Critical Chance,+1.44% critical chance,{'FlatCritChanceMod': 0.0144},"['physicalAttack', 'flat', 'quintessence']",,,True,2,black
+5221,Quintessence of Lethality,+2.49 lethality,{},['quintessence'],,,True,2,black
+5223,Quintessence of Health,+20 health,{'FlatHPPoolMod': 20},"['defense', 'flat', 'quintessence']",,,True,2,black
+5224,Quintessence of Scaling Health,+2.1 health per level (+37.8 at champion level 18),{'rFlatHPModPerLevel': 2.1034},"['defense', 'perLevel', 'quintessence']",,,True,2,black
+5225,Quintessence of Armor,+3.32 armor,{'FlatArmorMod': 3.3158},"['defense', 'flat', 'quintessence']",,,True,2,black
+5226,Quintessence of Scaling Armor,+0.29 armor per level (+5.22 at champion level 18),{'rFlatArmorModPerLevel': 0.2917},"['defense', 'perLevel', 'quintessence']",,,True,2,black
+5227,Quintessence of Magic Resist,+3.11 magic resist,{'FlatSpellBlockMod': 3.11},"['defense', 'flat', 'quintessence']",,,True,2,black
+5228,Quintessence of Scaling Magic Resist,+0.29 magic resist per level (+5.22 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.2886},"['defense', 'perLevel', 'quintessence']",,,True,2,black
+5229,Quintessence of Health Regeneration,+2.1 health regen / 5 sec.,{'FlatHPRegenMod': 0.42},"['defense', 'flat', 'quintessence']",,,True,2,black
+5230,Quintessence of Scaling Health Regeneration,+0.22 health regen / 5 sec. per level (+3.96 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0438},"['defense', 'perLevel', 'quintessence']",,,True,2,black
+5233,Quintessence of Cooldown Reduction,-1.95% cooldowns,{'rPercentCooldownMod': -0.0195},"['utility', 'percent', 'quintessence']",,,True,2,black
+5234,Quintessence of Scaling Cooldown Reduction,-0.21% cooldowns per level (-3.9% at champion level 18),{'rPercentCooldownModPerLevel': -0.0022},"['utility', 'percent', 'perLevel', 'quintessence']",,,True,2,black
+5235,Quintessence of Ability Power,+3.85 ability power,{'FlatMagicDamageMod': 3.85},"['magic', 'flat', 'quintessence']",,,True,2,black
+5236,Quintessence of Scaling Ability Power,+0.34 ability power per level (+6.12 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.3365},"['magic', 'perLevel', 'quintessence']",,,True,2,black
+5237,Quintessence of Mana,+29.17 mana,{'FlatMPPoolMod': 29.1667},"['magic', 'flat', 'quintessence']",,,True,2,black
+5238,Quintessence of Scaling Mana,+3.24 mana per level (+58.32 at champion level 18),{'rFlatMPModPerLevel': 3.2407},"['magic', 'perLevel', 'quintessence']",,,True,2,black
+5239,Quintessence of Mana Regeneration,+0.97 mana regen / 5 sec.,{'FlatMPRegenMod': 0.1944},"['magic', 'flat', 'quintessence']",,,True,2,black
+5240,Quintessence of Scaling Mana Regeneration,+0.19 mana regen / 5 sec. per level (+3.42 at champion level 18),{'rFlatMPRegenModPerLevel': 0.038},"['magic', 'perLevel', 'quintessence']",,,True,2,black
+5241,Quintessence of Magic Penetration,+1.56 magic penetration,{'rFlatMagicPenetrationMod': 1.56},"['magic', 'flat', 'quintessence']",,,True,2,black
+5243,Quintessence of Movement Speed,+1.17% movement speed,{'PercentMovementSpeedMod': 0.0117},"['utility', 'percent', 'quintessence']",,,True,2,black
+5245,Greater Mark of Attack Damage,+0.95 attack damage,{'FlatPhysicalDamageMod': 0.945},"['physicalAttack', 'flat', 'mark']",,,True,3,red
+5246,Greater Mark of Scaling Attack Damage,+0.13 attack damage per level (+2.43 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.135},"['physicalAttack', 'perLevel', 'mark']",,,True,3,red
+5247,Greater Mark of Attack Speed,+1.7% attack speed,{'PercentAttackSpeedMod': 0.017},"['physicalAttack', 'percent', 'mark']",,,True,3,red
+5249,Greater Mark of Critical Damage,+2.23% critical damage,{'FlatCritDamageMod': 0.0223},"['physicalAttack', 'flat', 'mark']",,,True,3,red
+5251,Greater Mark of Critical Chance,+0.93% critical chance,{'FlatCritChanceMod': 0.0093},"['physicalAttack', 'flat', 'mark']",,,True,3,red
+5253,Greater Mark of Lethality,+1.60 lethality,{},['mark'],,,True,3,red
+5255,Greater Mark of Health,+3.47 health,{'FlatHPPoolMod': 3.4749},"['defense', 'flat', 'mark']",,,True,3,red
+5256,Greater Mark of Scaling Health,+0.54 health per level (+9.72 at champion level 18),{'rFlatHPModPerLevel': 0.5409},"['defense', 'perLevel', 'mark']",,,True,3,red
+5257,Greater Mark of Armor,+0.91 armor,{'FlatArmorMod': 0.9144},"['defense', 'flat', 'mark']",,,True,3,red
+5259,Greater Mark of Magic Resist,+0.77 magic resist,{'FlatSpellBlockMod': 0.77},"['defense', 'flat', 'mark']",,,True,3,red
+5260,Greater Mark of Scaling Magic Resist,+0.07 magic resist per level (+1.26 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0742},"['defense', 'perLevel', 'mark']",,,True,3,red
+5265,Greater Mark of Cooldown Reduction,-0.2% cooldowns,{'rPercentCooldownMod': -0.002},"['utility', 'percent', 'mark']",,,True,3,red
+5267,Greater Mark of Ability Power,+0.59 ability power,{'FlatMagicDamageMod': 0.594},"['magic', 'flat', 'mark']",,,True,3,red
+5268,Greater Mark of Scaling Ability Power,+0.1 ability power per level (+1.8 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.1038},"['magic', 'perLevel', 'mark']",,,True,3,red
+5269,Greater Mark of Mana,+5.91 mana,{'FlatMPPoolMod': 5.9063},"['magic', 'flat', 'mark']",,,True,3,red
+5270,Greater Mark of Scaling Mana,+1.17 mana per level (+21.06 at champion level 18),{'rFlatMPModPerLevel': 1.1667},"['magic', 'perLevel', 'mark']",,,True,3,red
+5271,Greater Mark of Mana Regeneration,+0.26 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0525},"['magic', 'flat', 'mark']",,,True,3,red
+5273,Greater Mark of Magic Penetration,+0.87 magic penetration,{'rFlatMagicPenetrationMod': 0.87},"['magic', 'flat', 'mark']",,,True,3,red
+5275,Greater Glyph of Attack Damage,+0.28 attack damage,{'FlatPhysicalDamageMod': 0.2835},"['physicalAttack', 'flat', 'glyph']",,,True,3,blue
+5276,Greater Glyph of Scaling Attack Damage,+0.04 attack damage per level (+0.73 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0405},"['physicalAttack', 'perLevel', 'glyph']",,,True,3,blue
+5277,Greater Glyph of Attack Speed,+0.64% attack speed,{'PercentAttackSpeedMod': 0.0064},"['physicalAttack', 'percent', 'glyph']",,,True,3,blue
+5279,Greater Glyph of Critical Damage,+0.56% critical damage,{'FlatCritDamageMod': 0.0056},"['physicalAttack', 'flat', 'glyph']",,,True,3,blue
+5281,Greater Glyph of Critical Chance,+0.28% critical chance,{'FlatCritChanceMod': 0.0028},"['physicalAttack', 'flat', 'glyph']",,,True,3,blue
+5285,Greater Glyph of Health,+2.67 health,{'FlatHPPoolMod': 2.673},"['defense', 'flat', 'glyph']",,,True,3,blue
+5286,Greater Glyph of Scaling Health,+0.54 health per level (+9.72 at champion level 18),{'rFlatHPModPerLevel': 0.5409},"['defense', 'perLevel', 'glyph']",,,True,3,blue
+5287,Greater Glyph of Armor,+0.7 armor,{'FlatArmorMod': 0.7034},"['defense', 'flat', 'glyph']",,,True,3,blue
+5289,Greater Glyph of Magic Resist,+1.34 magic resist,{'FlatSpellBlockMod': 1.34},"['defense', 'flat', 'glyph']",,,True,3,blue
+5290,Greater Glyph of Scaling Magic Resist,+0.16 magic resist per level (+3 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.1667},"['defense', 'perLevel', 'glyph']",,,True,3,blue
+5291,Greater Glyph of Health Regeneration,+0.27 health regen / 5 sec.,{'FlatHPRegenMod': 0.054},"['defense', 'flat', 'glyph']",,,True,3,blue
+5295,Greater Glyph of Cooldown Reduction,-0.83% cooldowns,{'rPercentCooldownMod': -0.0083},"['utility', 'percent', 'glyph']",,,True,3,blue
+5296,Greater Glyph of Scaling Cooldown Reduction,-0.09% cooldowns per level (-1.67% at champion level 18),{'rPercentCooldownModPerLevel': -0.0009},"['utility', 'percent', 'perLevel', 'glyph']",,,True,3,blue
+5297,Greater Glyph of Ability Power,+1.19 ability power,{'FlatMagicDamageMod': 1.19},"['magic', 'flat', 'glyph']",,,True,3,blue
+5298,Greater Glyph of Scaling Ability Power,+0.17 ability power per level (+3.06 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.1731},"['magic', 'perLevel', 'glyph']",,,True,3,blue
+5299,Greater Glyph of Mana,+11.25 mana,{'FlatMPPoolMod': 11.25},"['magic', 'flat', 'glyph']",,,True,3,blue
+5300,Greater Glyph of Scaling Mana,+1.42 mana per level (+25.56 at champion level 18),{'rFlatMPModPerLevel': 1.4167},"['magic', 'perLevel', 'glyph']",,,True,3,blue
+5301,Greater Glyph of Mana Regeneration,+0.33 mana regen / 5 sec.,{'FlatMPRegenMod': 0.066},"['magic', 'flat', 'glyph']",,,True,3,blue
+5302,Greater Glyph of Scaling Mana Regeneration,+0.06 mana regen / 5 sec. per level (+1.2 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0133},"['magic', 'perLevel', 'glyph']",,,True,3,blue
+5303,Greater Glyph of Magic Penetration,+0.63 magic penetration,{'rFlatMagicPenetrationMod': 0.63},"['magic', 'flat', 'glyph']",,,True,3,blue
+5305,Greater Seal of Attack Damage,+0.43 attack damage,{'FlatPhysicalDamageMod': 0.4254},"['physicalAttack', 'flat', 'seal']",,,True,3,yellow
+5306,Greater Seal of Scaling Attack Damage,+0.06 attack damage per level (+1.09 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.0608},"['physicalAttack', 'perLevel', 'seal']",,,True,3,yellow
+5307,Greater Seal of Attack Speed,+0.76% attack speed,{'PercentAttackSpeedMod': 0.0076},"['physicalAttack', 'percent', 'seal']",,,True,3,yellow
+5309,Greater Seal of Critical Damage,+0.78% critical damage,{'FlatCritDamageMod': 0.0078},"['physicalAttack', 'flat', 'seal']",,,True,3,yellow
+5311,Greater Seal of Critical Chance,+0.42% critical chance,{'FlatCritChanceMod': 0.0042},"['physicalAttack', 'flat', 'seal']",,,True,3,yellow
+5315,Greater Seal of Health,+8 health,{'FlatHPPoolMod': 8},"['defense', 'flat', 'seal']",,,True,3,yellow
+5316,Greater Seal of Scaling Health,+1.33 health per level (+24 at champion level 18),{'rFlatHPModPerLevel': 1.3334},"['defense', 'perLevel', 'seal']",,,True,3,yellow
+5317,Greater Seal of Armor,+1 armor,{'FlatArmorMod': 1},"['defense', 'flat', 'seal']",,,True,3,yellow
+5318,Greater Seal of Scaling Armor,+0.16 armor per level (+3 at champion level 18),{'rFlatArmorModPerLevel': 0.1667},"['defense', 'perLevel', 'seal']",,,True,3,yellow
+5319,Greater Seal of Magic Resist,+0.74 magic resist,{'FlatSpellBlockMod': 0.7425},"['defense', 'flat', 'seal']",,,True,3,yellow
+5320,Greater Seal of Scaling Magic Resist,+0.1 magic resist per level (+1.8 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.0965},"['defense', 'perLevel', 'seal']",,,True,3,yellow
+5321,Greater Seal of Health Regeneration,+0.56 health regen / 5 sec.,{'FlatHPRegenMod': 0.1112},"['defense', 'flat', 'seal']",,,True,3,yellow
+5322,Greater Seal of Scaling Health Regeneration,+0.11 health regen / 5 sec. per level (+1.98 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0225},"['defense', 'perLevel', 'seal']",,,True,3,yellow
+5325,Greater Seal of Cooldown Reduction,-0.36% cooldowns,{'rPercentCooldownMod': -0.0036},"['utility', 'percent', 'seal']",,,True,3,yellow
+5327,Greater Seal of Ability Power,+0.59 ability power,{'FlatMagicDamageMod': 0.594},"['magic', 'flat', 'seal']",,,True,3,yellow
+5328,Greater Seal of Scaling Ability Power,+0.1 ability power per level (+1.8 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.1038},"['magic', 'perLevel', 'seal']",,,True,3,yellow
+5329,Greater Seal of Mana,+6.89 mana,{'FlatMPPoolMod': 6.8906},"['magic', 'flat', 'seal']",,,True,3,yellow
+5330,Greater Seal of Scaling Mana,+1.17 mana per level (+21.06 at champion level 18),{'rFlatMPModPerLevel': 1.1667},"['magic', 'perLevel', 'seal']",,,True,3,yellow
+5331,Greater Seal of Mana Regeneration,+0.41 mana regen / 5 sec.,{'FlatMPRegenMod': 0.0813},"['magic', 'flat', 'seal']",,,True,3,yellow
+5332,Greater Seal of Scaling Mana Regeneration,+0.065 mana regen / 5 sec. per level (+1.17 at champion level 18),{'rFlatMPRegenModPerLevel': 0.013},"['magic', 'perLevel', 'seal']",,,True,3,yellow
+5335,Greater Quintessence of Attack Damage,+2.25 attack damage,{'FlatPhysicalDamageMod': 2.25},"['physicalAttack', 'flat', 'quintessence']",,,True,3,black
+5336,Greater Quintessence of Scaling Attack Damage,+0.25 attack damage per level (+4.5 at champion level 18),{'rFlatPhysicalDamageModPerLevel': 0.25},"['physicalAttack', 'perLevel', 'quintessence']",,,True,3,black
+5337,Greater Quintessence of Attack Speed,+4.5% attack speed,{'PercentAttackSpeedMod': 0.045},"['physicalAttack', 'percent', 'quintessence']",,,True,3,black
+5339,Greater Quintessence of Critical Damage,+4.46% critical damage,{'FlatCritDamageMod': 0.0446},"['physicalAttack', 'flat', 'quintessence']",,,True,3,black
+5341,Greater Quintessence of Critical Chance,+1.86% critical chance,{'FlatCritChanceMod': 0.0186},"['physicalAttack', 'flat', 'quintessence']",,,True,3,black
+5343,Greater Quintessence of Lethality,+3.20 lethality,{},['quintessence'],,,True,3,black
+5345,Greater Quintessence of Health,+26 health,{'FlatHPPoolMod': 26},"['defense', 'flat', 'quintessence']",,,True,3,black
+5346,Greater Quintessence of Scaling Health,+2.7 health per level (+48.6 at champion level 18),{'rFlatHPModPerLevel': 2.7043},"['defense', 'perLevel', 'quintessence']",,,True,3,black
+5347,Greater Quintessence of Armor,+4.26 armor,{'FlatArmorMod': 4.2632},"['defense', 'flat', 'quintessence']",,,True,3,black
+5348,Greater Quintessence of Scaling Armor,+0.38 armor per level (+6.84 at champion level 18),{'rFlatArmorModPerLevel': 0.375},"['defense', 'perLevel', 'quintessence']",,,True,3,black
+5349,Greater Quintessence of Magic Resist,+4 magic resist,{'FlatSpellBlockMod': 4},"['defense', 'flat', 'quintessence']",,,True,3,black
+5350,Greater Quintessence of Scaling Magic Resist,+0.37 magic resist per level (+6.66 at champion level 18),{'rFlatSpellBlockModPerLevel': 0.3711},"['defense', 'perLevel', 'quintessence']",,,True,3,black
+5351,Greater Quintessence of Health Regeneration,+2.7 health regen / 5 sec.,{'FlatHPRegenMod': 0.54},"['defense', 'flat', 'quintessence']",,,True,3,black
+5352,Greater Quintessence of Scaling Health Regeneration,+0.28 health regen / 5 sec. per level (+5.04 at champion level 18),{'rFlatHPRegenModPerLevel': 0.0563},"['defense', 'perLevel', 'quintessence']",,,True,3,black
+5355,Greater Quintessence of Cooldown Reduction,-2.5% cooldowns,{'rPercentCooldownMod': -0.025},"['utility', 'percent', 'quintessence']",,,True,3,black
+5356,Greater Quintessence of Scaling Cooldown Reduction,-0.28% cooldowns per level (-5% at champion level 18),{'rPercentCooldownModPerLevel': -0.0028},"['utility', 'percent', 'perLevel', 'quintessence']",,,True,3,black
+5357,Greater Quintessence of Ability Power,+4.95 ability power,{'FlatMagicDamageMod': 4.95},"['magic', 'flat', 'quintessence']",,,True,3,black
+5358,Greater Quintessence of Scaling Ability Power,+0.43 ability power per level (+7.74 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.4327},"['magic', 'perLevel', 'quintessence']",,,True,3,black
+5359,Greater Quintessence of Mana,+37.5 mana,{'FlatMPPoolMod': 37.5},"['magic', 'flat', 'quintessence']",,,True,3,black
+5360,Greater Quintessence of Scaling Mana,+4.17 mana per level (+75.06 at champion level 18),{'rFlatMPModPerLevel': 4.1667},"['magic', 'perLevel', 'quintessence']",,,True,3,black
+5361,Greater Quintessence of Mana Regeneration,+1.25 mana regen / 5 sec.,{'FlatMPRegenMod': 0.25},"['magic', 'flat', 'quintessence']",,,True,3,black
+5362,Greater Quintessence of Scaling Mana Regeneration,+0.24 mana regen / 5 sec. per level (+4.32 at champion level 18),{'rFlatMPRegenModPerLevel': 0.0488},"['magic', 'perLevel', 'quintessence']",,,True,3,black
+5363,Greater Quintessence of Magic Penetration,+2.01 magic penetration,{'rFlatMagicPenetrationMod': 2.01},"['magic', 'flat', 'quintessence']",,,True,3,black
+5365,Greater Quintessence of Movement Speed,+1.5% movement speed,{'PercentMovementSpeedMod': 0.015},"['utility', 'percent', 'quintessence']",,,True,3,black
+5366,Greater Quintessence of Revival,-5% time dead,{'rPercentTimeDeadMod': 0.05},"['utility', 'percent', 'quintessence']",,,True,3,black
+5367,Greater Quintessence of Gold,+1 gold / 10 sec.,{'rFlatGoldPer10Mod': 1},"['utility', 'quintessence']",,,True,3,black
+5368,Greater Quintessence of Experience,+2% experience gained,{'PercentEXPBonus': 0.02},"['utility', 'percent', 'quintessence']",,,True,3,black
+5369,Greater Seal of Energy Regeneration,+0.63 Energy regen/5 sec,{'FlatEnergyRegenMod': 0.126},['seal'],,,True,3,yellow
+5370,Greater Seal of Scaling Energy Regeneration,+0.064 Energy regen/5 sec per level (+1.15 at champion level 18),{'rFlatEnergyRegenModPerLevel': 0.0128},['seal'],,,True,3,yellow
+5371,Greater Glyph of Energy,+2.2 Energy,{'FlatEnergyPoolMod': 2.2},['glyph'],,,True,3,blue
+5372,Greater Glyph of Scaling Energy,+0.161 Energy/level (+2.89 at level 18),{'rFlatEnergyModPerLevel': 0.161},['glyph'],,,True,3,blue
+5373,Greater Quintessence of Energy Regeneration,+1.575 Energy regen/5 sec,{'FlatEnergyRegenMod': 0.315},['quintessence'],,,True,3,black
+5374,Greater Quintessence of Energy,+5.4 Energy,{'FlatEnergyPoolMod': 5.4},['quintessence'],,,True,3,black
+5400,Lesser Mark of Precision,+0.63 Lethality / +0.34 Magic Penetration,{'rFlatMagicPenetrationMod': 0.34},"['magic', 'flat', 'mark']",,,True,1,red
+5401,Mark of Precision,+0.7 Leth / +0.48 M.Pen,{'rFlatMagicPenetrationMod': 0.48},"['magic', 'flat', 'mark']",,,True,2,red
+5402,Greater Mark of Precision,+1.13 Lethality / +0.62 Magic Penetration,{'rFlatMagicPenetrationMod': 0.61},"['magic', 'flat', 'mark']",,,True,3,red
+5403,Greater Seal of Gold,+0.25 gold / 10 sec.,{'rFlatGoldPer10Mod': 0.25},"['utility', 'seal']",,,True,3,yellow
+5404,Lesser Quintessence of Percent Health,+0.84% increased health.,{'PercentHPPoolMod': 0.0084},"['defense', 'percent', 'quintessence']",,,True,1,black
+5405,Quintessence of Percent Health,+1.17% increased health.,{'PercentHPPoolMod': 0.0117},"['defense', 'percent', 'quintessence']",,,True,2,black
+5406,Greater Quintessence of Percent Health,+1.5% increased health.,{'PercentHPPoolMod': 0.015},"['defense', 'percent', 'quintessence']",,,True,3,black
+5407,Lesser Quintessence of Spell Vamp,+1.12% Spellvamp.,{'PercentSpellVampMod': 0.0112},['quintessence'],,,True,1,black
+5408,Quintessence of Spell Vamp,+1.56% Spellvamp.,{'PercentSpellVampMod': 0.0156},['quintessence'],,,True,2,black
+5409,Greater Quintessence of Spell Vamp,+2% Spellvamp.,{'PercentSpellVampMod': 0.02},['quintessence'],,,True,3,black
+5410,Lesser Quintessence of Life Steal,+0.84% Life Steal,{'PercentLifeStealMod': 0.0084},['quintessence'],,,True,1,black
+5411,Quintessence of Life Steal,+1.17% Life Steal,{'PercentLifeStealMod': 0.0117},['quintessence'],,,True,2,black
+5412,Greater Quintessence of Life Steal,+1.5% Life Steal.,{'PercentLifeStealMod': 0.015},['quintessence'],,,True,3,black
+5413,Lesser Seal of Percent Health,+0.28% Health.,{'PercentHPPoolMod': 0.0028},"['defense', 'percent', 'seal']",,,True,1,yellow
+5414,Seal of Percent Health,+0.39% Health.,{'PercentHPPoolMod': 0.0039},"['defense', 'percent', 'seal']",,,True,2,yellow
+5415,Greater Seal of Percent Health,+0.5% Health.,{'PercentHPPoolMod': 0.005},"['defense', 'percent', 'seal']",,,True,3,yellow
+5416,Lesser Quintessence of Precision,+1.24 Lethality / +0.78 Magic Penetration,{'rFlatMagicPenetrationMod': 0.78},"['magic', 'flat', 'quintessence']",,,True,1,black
+5417,Quintessence of Precision,+1.74 Lethality / +1.09 Magic Penetration,{'rFlatMagicPenetrationMod': 1.09},"['magic', 'flat', 'quintessence']",,,True,2,black
+5418,Greater Quintessence of Precision,+2.24 Lethality / +1.4 Magic Penetration,{'rFlatMagicPenetrationMod': 1.4},"['magic', 'flat', 'quintessence']",,,True,3,black
+8001,Mark of the Crippling Candy Cane,+2% critical damage,{'FlatCritDamageMod': 0.0198},"['physicalAttack', 'flat', 'mark']",,,True,2,red
+8002,Lesser Mark of the Yuletide Tannenbaum ,+0.62% critical chance,{'FlatCritChanceMod': 0.0062},"['physicalAttack', 'flat', 'mark']",,,True,1,red
+8003,Glyph of the Special Stocking,-0.75% cooldowns,{'rPercentCooldownMod': -0.0075},"['utility', 'percent', 'glyph']",,,True,2,blue
+8005,Lesser Glyph of the Gracious Gift,+0.12 ability power per level (+2.16 at champion level 18),{'rFlatMagicDamageModPerLevel': 0.1154},"['magic', 'perLevel', 'glyph']",,,True,1,blue
+8006,Lesser Seal of the Stout Snowman,+0.72 health per level (+12.96 at champion level 18),{'rFlatHPModPerLevel': 0.7211},"['defense', 'perLevel', 'seal']",,,True,1,yellow
+8007,Lesser Mark of Alpine Attack Speed,+1.13% attack speed,{'PercentAttackSpeedMod': 0.0113},"['physicalAttack', 'percent', 'mark']",,,True,1,red
+8008,Mark of the Combatant,+2% critical damage,{'FlatCritDamageMod': 0.0198},"['physicalAttack', 'flat', 'mark']",,,True,2,red
+8009,Lesser Seal of the Medalist,+3.56 health,{'FlatHPPoolMod': 3.564},"['defense', 'flat', 'seal']",,,True,1,yellow
+8011,Lesser Glyph of the Challenger,+0.66 ability power,{'FlatMagicDamageMod': 0.66},"['magic', 'flat', 'glyph']",,,True,1,blue
+8012,Glyph of the Soaring Slalom,-0.75% cooldowns,{'rPercentCooldownMod': -0.0075},"['utility', 'percent', 'glyph']",,,True,2,blue
+8013,Quintessence of the Headless Horseman,+2.96 lethality,{},['quintessence'],,,True,2,black
+8014,Quintessence of the Piercing Screech,+1.85 magic penetration,{'rFlatMagicPenetrationMod': 1.85},"['magic', 'flat', 'quintessence']",,,True,2,black
+8015,Quintessence of Bountiful Treats,+24 health,{'FlatHPPoolMod': 24},"['defense', 'flat', 'quintessence']",,,True,2,black
+8016,Quintessence of the Speedy Specter,+1.39% movement speed,{'PercentMovementSpeedMod': 0.0139},"['utility', 'percent', 'quintessence']",,,True,2,black
+8017,Quintessence of the Witches Brew,+4.56 ability power,{'FlatMagicDamageMod': 4.56},"['magic', 'flat', 'quintessence']",,,True,2,black
+8019,Greater Quintessence of the Piercing Present,+2.01 magic penetration,{'rFlatMagicPenetrationMod': 2.01},"['magic', 'flat', 'quintessence']",,,True,3,black
+8020,Greater Quintessence of the Deadly Wreath,+3.20 lethality,{},['quintessence'],,,True,3,black
+8021,Greater Quintessence of Frosty Health,+26 health,{'FlatHPPoolMod': 26},"['defense', 'flat', 'quintessence']",,,True,3,black
+8022,Greater Quintessence of Sugar Rush,+1.5% movement speed,{'PercentMovementSpeedMod': 0.015},"['utility', 'percent', 'quintessence']",,,True,3,black
+8035,Greater Quintessence of Studio Rumble,+1.5% movement speed,{'PercentMovementSpeedMod': 0.015},"['utility', 'percent', 'quintessence']",,,True,3,black
