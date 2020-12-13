@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """
 author: Brian Shin
 email: brianhesungshin@gmail.com
