@@ -60,7 +60,7 @@ s3 = boto3.client(
     aws_secret_access_key=os.environ['aws_secret_access_key'])
 
 # local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
-driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver'
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
 
 ################################################################################
 # for loading dataframes to s3 bucket
