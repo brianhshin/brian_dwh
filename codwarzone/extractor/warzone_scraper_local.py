@@ -1,4 +1,4 @@
-"""
+driver_path"""
 author: Brian Shin
 email: brianhesungshin@gmail.com
 """
@@ -57,6 +57,9 @@ s3 = boto3.client(
     aws_access_key_id=os.environ['aws_access_key_id'],
     aws_secret_access_key=os.environ['aws_secret_access_key'])
 
+# local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
+driver_path = '~/brian_dwh/drivers/chromedriver'
+
 ################################################################################
 # for loading dataframes to s3 bucket
 def s3_upload_file(data, bucket, filepath):
@@ -108,7 +111,7 @@ def get_game_links_soup(gamer_id):
 
     gamer = gamer_id.replace('#', '%23')
     game_links_url = f'https://cod.tracker.gg/warzone/profile/battlenet/{gamer}/matches'
-    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/tinker/drivers/chromedriver_mac')
+    driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(game_links_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
@@ -122,7 +125,7 @@ def get_game_links_soup(gamer_id):
 # takes in a game url and requests/pulls the soup using selenium with chrome driver
 def get_game_soup(game_url):
 
-    driver = webdriver.Chrome(executable_path='/Users/brianshin/brian/tinker/drivers/chromedriver_mac')
+    driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(game_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
