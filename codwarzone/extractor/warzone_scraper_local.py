@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup as bs
 from time import sleep
 from urllib.request import Request, urlopen
 from selenium import webdriver
+from pyvirtualdisplay import Display
 from datetime import timedelta
 
 import pandas as pd
@@ -42,6 +43,9 @@ ssl._create_default_https_context = ssl._create_unverified_context
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 pd.set_option('display.max_rows', 1000)
 pd.set_option('display.max_columns', 1000)
+
+display = Display(visible=0, size=(800, 800))
+display.start()
 
 today = dt.datetime.now().strftime("%Y%m%d")
 today_id = dt.datetime.now().strftime("%Y-%m-%d")
