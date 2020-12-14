@@ -64,7 +64,7 @@ s3 = boto3.client(
 # local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
 # os.chdir('/home/ubuntu')
 
-driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux_87'
 
 ################################################################################
 # for loading dataframes to s3 bucket
