@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 author: Brian Shin
 email: brianhesungshin@gmail.com
@@ -66,7 +64,7 @@ s3 = boto3.client(
 # local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
 # os.chdir('/home/ubuntu')
 
-driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver'
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
 
 ################################################################################
 # for loading dataframes to s3 bucket
