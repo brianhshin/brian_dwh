@@ -66,7 +66,7 @@ s3 = boto3.client(
 # local_driver_path = '/Users/brianshin/brian/tinker/drivers/chromedriver_mac'
 # os.chdir('/home/ubuntu')
 
-driver_path = '~/brian_dwh/drivers/chromedriver_linux'
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
 
 ################################################################################
 # for loading dataframes to s3 bucket
@@ -119,7 +119,7 @@ def get_game_links_soup(gamer_id):
 
     gamer = gamer_id.replace('#', '%23')
     game_links_url = f'https://cod.tracker.gg/warzone/profile/battlenet/{gamer}/matches'
-    driver = webdriver.Chrome(executable_path='~/brian_dwh/drivers/chromedriver_linux')
+    driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(game_links_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
@@ -133,7 +133,7 @@ def get_game_links_soup(gamer_id):
 # takes in a game url and requests/pulls the soup using selenium with chrome driver
 def get_game_soup(game_url):
 
-    driver = webdriver.Chrome(executable_path='~/brian_dwh/drivers/chromedriver_linux')
+    driver = webdriver.Chrome(executable_path=driver_path)
     driver.get(game_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
