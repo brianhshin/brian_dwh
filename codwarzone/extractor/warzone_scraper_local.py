@@ -621,13 +621,13 @@ def parse_warzone_tracker(gamer_id):
 
         archive_filename = f'{final_df[0]}_{gamer_id}_{today}.csv'.replace('#', '_')
         current_filename = f'{final_df[0]}_{gamer_id}.csv'.replace('#', '_')
-        archive_local_filepath = f'~/brian_dwh/codwarzone/output/archive/{final_df[0]}/{archive_filename}'
+        # archive_local_filepath = f'~/brian_dwh/codwarzone/output/archive/{final_df[0]}/{archive_filename}'
         current_local_filepath = f'~/brian_dwh/codwarzone/output/current/{current_filename}'
 
-        final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
+        # final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
         final_df[1].to_csv(current_local_filepath, encoding='utf-8', index=False)
 
-        s3_upload_file(data = archive_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{archive_filename}')
+        s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{archive_filename}')
         s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'current/{current_filename}')
 
 
