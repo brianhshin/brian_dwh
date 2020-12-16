@@ -621,8 +621,8 @@ def parse_warzone_tracker(gamer_id):
 
         archive_filename = f'{final_df[0]}_{gamer_id}_{today}.csv'.replace('#', '_')
         current_filename = f'{final_df[0]}_{gamer_id}.csv'.replace('#', '_')
-        archive_local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/archive/{final_df[0]}/{archive_filename}'
-        current_local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/current/{current_filename}'
+        archive_local_filepath = f'~/brian_dwh/codwarzone/output/archive/{final_df[0]}/{archive_filename}'
+        current_local_filepath = f'~/brian_dwh/codwarzone/output/current/{current_filename}'
 
         final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
         final_df[1].to_csv(current_local_filepath, encoding='utf-8', index=False)
@@ -703,7 +703,7 @@ def get_historic_game_details(backfill_path, gamer_id):
     games_details_all.reset_index(inplace=True, drop=True)
 
     filename = f'game_details_{gamer_id}_{today}.csv'
-    local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/game_details/{filename}'
+    local_filepath = f'~/brian_dwh/codwarzone/output/game_details/{filename}'
 
     games_details_all.to_csv(
         local_filepath,
@@ -869,7 +869,7 @@ def get_historic_game_stats(games_details_all, gamer_id):
     game_stats_historic.reset_index(inplace=True, drop=True)
 
     filename = f'game_stats_{gamer_id}_{today}.csv'
-    local_filepath = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/game_stats/{filename}'
+    local_filepath = f'~/brian_dwh/codwarzone/output/game_stats/{filename}'
 
     game_stats_historic.to_csv(
         local_filepath,
@@ -913,7 +913,7 @@ if __name__ == '__main__':
         backfill_username = input('enter username (ex: gs25#11901):')
         backfill_date = input ('enter backfill date as yyyymmdd (ex: 20201201):')
         backfill_filename = f'backfill_{backfill_username}_{backfill_date}.csv'.replace('#', '_')
-        backfill_path = f'/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/archive/backfills/{backfill_filename}'
+        backfill_path = f'~/brian_dwh/codwarzone/output/archive/backfills/{backfill_filename}'
 
         games_details_all = get_historic_game_details(backfill_path, gamer_id)
         get_historic_game_stats(games_details_all, gamer_id)
