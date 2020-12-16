@@ -17,6 +17,7 @@ from bs4 import BeautifulSoup as bs
 from time import sleep
 from urllib.request import Request, urlopen
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 # from pyvirtualdisplay import Display
 from datetime import timedelta
 
