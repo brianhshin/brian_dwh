@@ -66,6 +66,11 @@ s3 = boto3.client(
 
 driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux'
 
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+
 ################################################################################
 # for loading dataframes to s3 bucket
 def s3_upload_file(data, bucket, filepath):
@@ -117,7 +122,7 @@ def get_game_links_soup(gamer_id):
 
     gamer = gamer_id.replace('#', '%23')
     game_links_url = f'https://cod.tracker.gg/warzone/profile/battlenet/{gamer}/matches'
-    driver = webdriver.Chrome(executable_path=driver_path)
+    driver = webdriver.Chrome(executable_path=driver_path, chrome_options=chrome_options)
     driver.get(game_links_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
@@ -131,7 +136,7 @@ def get_game_links_soup(gamer_id):
 # takes in a game url and requests/pulls the soup using selenium with chrome driver
 def get_game_soup(game_url):
 
-    driver = webdriver.Chrome(executable_path=driver_path)
+    driver = webdriver.Chrome(executable_path=driver_path, chrome_options=chrome_options)
     driver.get(game_url)
     # need to sleep for 5 sec to let page finish loading before pulling dynamic content
     sleep(5)
