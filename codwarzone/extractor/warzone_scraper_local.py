@@ -439,172 +439,169 @@ def parse_warzone_tracker(gamer_id):
     start_time = dt.datetime.now()
     print('script started at:', start_time)
 
-    # # gamer_id = 'gs25#11901'
+    # gamer_id = 'gs25#11901'
 
-    # # pull profile soup
-    # profile_soup = get_profile_soup(gamer_id)
-    # # parse profile data
-    # profile_df = get_profile_data(profile_soup, gamer_id)
-    # # parse games page soup
-    # game_links_soup = get_game_links_soup(gamer_id)
-    # # parse urls of games page
-    # games_list = get_game_links(game_links_soup)
-    # # parse details of games page
-    # games_details_all = get_game_details(game_links_soup, gamer_id)
-    # # create empty dataframe to populate with game stats
-    # games_stats_all = pd.DataFrame(
-    #     columns = [
-    #         # 'game_date',
-    #         # 'game_time',
-    #         'game_id',
-    #         'Kills',
-    #         'Medal Xp',
-    #         'Team Wiped',
-    #         'Last Stand Kill',
-    #         'Match Xp',
-    #         'Score Xp',
-    #         'Wall Bangs',
-    #         'Score',
-    #         'Total Xp',
-    #         'Headshots',
-    #         'Assists',
-    #         'Challenge Xp',
-    #         'Score/min',
-    #         'Distance Traveled',
-    #         'Team Survival',
-    #         'Deaths',
-    #         'K/D Ratio',
-    #         'Mission Pickup Tablet',
-    #         'Bonus Xp',
-    #         'Gulag Deaths',
-    #         'Time Played',
-    #         'Executions',
-    #         'Gulag Kills',
-    #         '% Time Moving',
-    #         'Misc Xp',
-    #         'Longest Streak',
-    #         'Team Placement',
-    #         'Damage',
-    #         'Damage Taken',
-    #         'Reviver',
-    #         'Nearmisses',
-    #         'Kiosk Buy',
-    #         'Damage/min',
-    #         'Down Enemy Circle 1',
-    #         'Down Enemy Circle 2',
-    #         'Down Enemy Circle 3',
-    #         'Down Enemy Circle 4',
-    #         'Down Enemy Circle 5',
-    #         'Cache Open'])
+    # pull profile soup
+    profile_soup = get_profile_soup(gamer_id)
+    # parse profile data
+    profile_df = get_profile_data(profile_soup, gamer_id)
+    # parse games page soup
+    game_links_soup = get_game_links_soup(gamer_id)
+    # parse urls of games page
+    games_list = get_game_links(game_links_soup)
+    # parse details of games page
+    games_details_all = get_game_details(game_links_soup, gamer_id)
+    # create empty dataframe to populate with game stats
+    games_stats_all = pd.DataFrame(
+        columns = [
+            # 'game_date',
+            # 'game_time',
+            'game_id',
+            'Kills',
+            'Medal Xp',
+            'Team Wiped',
+            'Last Stand Kill',
+            'Match Xp',
+            'Score Xp',
+            'Wall Bangs',
+            'Score',
+            'Total Xp',
+            'Headshots',
+            'Assists',
+            'Challenge Xp',
+            'Score/min',
+            'Distance Traveled',
+            'Team Survival',
+            'Deaths',
+            'K/D Ratio',
+            'Mission Pickup Tablet',
+            'Bonus Xp',
+            'Gulag Deaths',
+            'Time Played',
+            'Executions',
+            'Gulag Kills',
+            '% Time Moving',
+            'Misc Xp',
+            'Longest Streak',
+            'Team Placement',
+            'Damage',
+            'Damage Taken',
+            'Reviver',
+            'Nearmisses',
+            'Kiosk Buy',
+            'Damage/min',
+            'Down Enemy Circle 1',
+            'Down Enemy Circle 2',
+            'Down Enemy Circle 3',
+            'Down Enemy Circle 4',
+            'Down Enemy Circle 5',
+            'Cache Open'])
 
-    # # iterate on game urls and parse data to append to empty df
-    # for game in games_list:
-    #     print('parsing game:', game)
-    #     # try statement bc sometimes activision pulls bad data for game stats
-    #     try:
-    #         game_stats = get_game_data(game)
-    #         games_stats_all = pd.concat([games_stats_all, game_stats])
-    #     # except IndexError:
-    #     except Exception as ex:
-    #         game_stats = get_game_data(game)
-    #         games_stats_all = pd.concat([games_stats_all, game_stats])
+    # iterate on game urls and parse data to append to empty df
+    for game in games_list:
+        print('parsing game:', game)
+        # try statement bc sometimes activision pulls bad data for game stats
+        try:
+            game_stats = get_game_data(game)
+            games_stats_all = pd.concat([games_stats_all, game_stats])
+        # except IndexError:
+        except Exception as ex:
+            game_stats = get_game_data(game)
+            games_stats_all = pd.concat([games_stats_all, game_stats])
 
-    # games_stats_all.rename(
-    #     columns={'Kills': 'kills',
-    #         'Medal Xp': 'medal_xp',
-    #         'Team Wiped': 'team_wiped',
-    #         'Last Stand Kill': 'last_stand_kill',
-    #         'Match Xp': 'match_xp',
-    #         'Score Xp': 'score_xp',
-    #         'Wall Bangs': 'wall_bangs',
-    #         'Score': 'score',
-    #         'Total Xp': 'total_xp',
-    #         'Headshots': 'headshots',
-    #         'Assists': 'assists',
-    #         'Challenge Xp': 'challenge_xp',
-    #         'Score/min': 'score_per_min',
-    #         'Distance Traveled': 'distance_traveled',
-    #         'Team Survival': 'team_survival',
-    #         'Deaths': 'deaths',
-    #         'K/D Ratio': 'kd',
-    #         'Mission Pickup Tablet': 'mission_pickup_tablet',
-    #         'Bonus Xp': 'bonus_xp',
-    #         'Gulag Deaths': 'gulag_deaths',
-    #         'Time Played': 'time_played',
-    #         'Executions': 'executions',
-    #         'Gulag Kills': 'gulag_kills',
-    #         '% Time Moving': 'percent_time_moving',
-    #         'Misc Xp': 'misc_xp',
-    #         'Longest Streak': 'longest_streak',
-    #         'Team Placement': 'team_placement',
-    #         'Damage': 'damage',
-    #         'Damage Taken': 'damage_taken',
-    #         'Reviver': 'reviver',
-    #         'Nearmisses': 'nearmisses',
-    #         'Kiosk Buy': 'kiosk_buy',
-    #         'Damage/min': 'damager_per_min',
-    #         'Down Enemy Circle 1': 'down_enemy_circle1',
-    #         'Down Enemy Circle 2': 'down_enemy_circle2',
-    #         'Down Enemy Circle 3': 'down_enemy_circle3',
-    #         'Down Enemy Circle 4': 'down_enemy_circle4',
-    #         'Down Enemy Circle 5': 'down_enemy_circle5',
-    #         'Cache Open': 'cache_open'},
-    #     inplace=True)
+    games_stats_all.rename(
+        columns={'Kills': 'kills',
+            'Medal Xp': 'medal_xp',
+            'Team Wiped': 'team_wiped',
+            'Last Stand Kill': 'last_stand_kill',
+            'Match Xp': 'match_xp',
+            'Score Xp': 'score_xp',
+            'Wall Bangs': 'wall_bangs',
+            'Score': 'score',
+            'Total Xp': 'total_xp',
+            'Headshots': 'headshots',
+            'Assists': 'assists',
+            'Challenge Xp': 'challenge_xp',
+            'Score/min': 'score_per_min',
+            'Distance Traveled': 'distance_traveled',
+            'Team Survival': 'team_survival',
+            'Deaths': 'deaths',
+            'K/D Ratio': 'kd',
+            'Mission Pickup Tablet': 'mission_pickup_tablet',
+            'Bonus Xp': 'bonus_xp',
+            'Gulag Deaths': 'gulag_deaths',
+            'Time Played': 'time_played',
+            'Executions': 'executions',
+            'Gulag Kills': 'gulag_kills',
+            '% Time Moving': 'percent_time_moving',
+            'Misc Xp': 'misc_xp',
+            'Longest Streak': 'longest_streak',
+            'Team Placement': 'team_placement',
+            'Damage': 'damage',
+            'Damage Taken': 'damage_taken',
+            'Reviver': 'reviver',
+            'Nearmisses': 'nearmisses',
+            'Kiosk Buy': 'kiosk_buy',
+            'Damage/min': 'damager_per_min',
+            'Down Enemy Circle 1': 'down_enemy_circle1',
+            'Down Enemy Circle 2': 'down_enemy_circle2',
+            'Down Enemy Circle 3': 'down_enemy_circle3',
+            'Down Enemy Circle 4': 'down_enemy_circle4',
+            'Down Enemy Circle 5': 'down_enemy_circle5',
+            'Cache Open': 'cache_open'},
+        inplace=True)
 
-    # # reorder the columns
-    # games_stats_all = games_stats_all[[
-    #     'game_id',
-    #     # 'game_date',
-    #     # 'game_time',
-    #     'kills',
-    #     'deaths',
-    #     'assists',
-    #     'kd',
-    #     'damage',
-    #     'score',
-    #     'score_per_min',
-    #     'wall_bangs',
-    #     'headshots',
-    #     'reviver',
-    #     'team_placement',
-    #     'time_played',
-    #     'total_xp',
-    #     'score_xp',
-    #     'match_xp',
-    #     'challenge_xp',
-    #     'medal_xp',
-    #     'bonus_xp',
-    #     'misc_xp',
-    #     'team_wiped',
-    #     'gulag_kills',
-    #     'gulag_deaths',
-    #     'distance_traveled',
-    #     'percent_time_moving',
-    #     'team_survival',
-    #     'executions',
-    #     'nearmisses',
-    #     'kiosk_buy',
-    #     'damage_taken',
-    #     'mission_pickup_tablet',
-    #     'last_stand_kill',
-    #     # 'down_enemy_circle1',
-    #     # 'down_enemy_circle2',
-    #     # 'down_enemy_circle3',
-    #     # 'down_enemy_circle4',
-    #     # 'down_enemy_circle5',
-    #     'longest_streak',
-    #     'cache_open']]
-    # games_stats_all.insert(loc=1, column='gamer_id', value=gamer_id)
-    # games_stats_all.reset_index(inplace=True, drop=True)
+    # reorder the columns
+    games_stats_all = games_stats_all[[
+        'game_id',
+        # 'game_date',
+        # 'game_time',
+        'kills',
+        'deaths',
+        'assists',
+        'kd',
+        'damage',
+        'score',
+        'score_per_min',
+        'wall_bangs',
+        'headshots',
+        'reviver',
+        'team_placement',
+        'time_played',
+        'total_xp',
+        'score_xp',
+        'match_xp',
+        'challenge_xp',
+        'medal_xp',
+        'bonus_xp',
+        'misc_xp',
+        'team_wiped',
+        'gulag_kills',
+        'gulag_deaths',
+        'distance_traveled',
+        'percent_time_moving',
+        'team_survival',
+        'executions',
+        'nearmisses',
+        'kiosk_buy',
+        'damage_taken',
+        'mission_pickup_tablet',
+        'last_stand_kill',
+        # 'down_enemy_circle1',
+        # 'down_enemy_circle2',
+        # 'down_enemy_circle3',
+        # 'down_enemy_circle4',
+        # 'down_enemy_circle5',
+        'longest_streak',
+        'cache_open']]
+    games_stats_all.insert(loc=1, column='gamer_id', value=gamer_id)
+    games_stats_all.reset_index(inplace=True, drop=True)
 
-    # print(profile_df.shape)
-    # print(games_details_all.shape)
-    # print(games_stats_all.shape)
+    print(profile_df.shape)
+    print(games_details_all.shape)
+    print(games_stats_all.shape)
     
-    #delete
-    profile_df = pd.DataFrame()
-    games_details_all = pd.DataFrame()
-    games_stats_all = pd.DataFrame()
+ 
 
     final_dfs = [('profile', profile_df),
                  ('game_details', games_details_all),
@@ -631,8 +628,6 @@ def parse_warzone_tracker(gamer_id):
 
         final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
         final_df[1].to_csv(current_local_filepath, encoding='utf-8', index=False)
-
-        sleep(10)
 
         s3_upload_file(data = archive_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{gamer_id}/{archive_filename}')
         s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'current/{final_df[0]}/{gamer_id}/{current_filename}')
