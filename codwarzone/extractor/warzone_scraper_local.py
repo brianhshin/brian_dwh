@@ -627,8 +627,8 @@ def parse_warzone_tracker(gamer_id):
         final_df[1].to_csv(archive_local_filepath, encoding='utf-8', index=False)
         final_df[1].to_csv(current_local_filepath, encoding='utf-8', index=False)
 
-        s3_upload_file(data = archive_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{archive_filename}')
-        s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'current/{current_filename}')
+        s3_upload_file(data = archive_local_filepath, bucket = s3_bucket, filepath = f'archive/{final_df[0]}/{gamer_id}/{archive_filename}')
+        s3_upload_file(data = current_local_filepath, bucket = s3_bucket, filepath = f'current/{final_df[0]}/{gamer_id}/{current_filename}')
 
 
     time = (dt.datetime.now() - start_time)
