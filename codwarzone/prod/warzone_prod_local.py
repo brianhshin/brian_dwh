@@ -21,7 +21,7 @@ import argparse
 
 
 today = dt.datetime.now().strftime("%Y-%m-%d")
-os.chdir('/Users/brianshin/brian/tinker/brian_dwh/codwarzone/output/current')
+os.chdir('~/brian_dwh/codwarzone/output/current')
 
 def create_connection(drop=True):
   """
