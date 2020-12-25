@@ -170,7 +170,7 @@ def profile_dim(conn):
         ;
         """
     cur.execute(profile_create_sql)
-    # cur.execute(profile_prod_sql)
+    cur.execute(profile_prod_sql)
     conn.commit()
     print('inserted values into profile_staging')
 
