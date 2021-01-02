@@ -62,9 +62,9 @@ games_details_all = pd.DataFrame()
 games_most_recent = games_by_day[0].findAll('div', attrs={'class':'match__row'})
 games_prior = games_by_day[1].findAll('div', attrs={'class':'match__row'})
 
-game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+# game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
 
-print(game_date)
+print(games_by_day)
 # for x in range(len(games_most_recent)):
 #     game_details_df = get_game_details_for_day(games_most_recent, x)
 #     game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
@@ -89,5 +89,5 @@ print(game_date)
 # games_details_all.reset_index(inplace=True, drop=True)
 
 
-print(games_most_recent)
-print(games_prior)
+# print(games_most_recent)
+# print(games_prior)
