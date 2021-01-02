@@ -62,6 +62,32 @@ games_details_all = pd.DataFrame()
 games_most_recent = games_by_day[0].findAll('div', attrs={'class':'match__row'})
 games_prior = games_by_day[1].findAll('div', attrs={'class':'match__row'})
 
+game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+
+print(game_date)
+# for x in range(len(games_most_recent)):
+#     game_details_df = get_game_details_for_day(games_most_recent, x)
+#     game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+#     game_date_parsed = parse_text(game_date)
+#     game_details_df.insert(loc=1, column='game_date', value=game_date_parsed)
+#     games_details_all = pd.concat([games_details_all, game_details_df])
+
+# for x in range(len(games_prior)):
+#     game_details_df = get_game_details_for_day(games_prior, x)
+#     game_date = games_by_day[1].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
+#     game_date_parsed = parse_text(game_date)
+#     game_details_df.insert(loc=1, column='game_date', value=game_date_parsed)
+#     games_details_all = pd.concat([games_details_all, game_details_df])
+
+# # date_col = games_details_all.pop('game_date')
+# # games_details_all.insert(loc=1, column='game_date', value=date_col)
+# games_details_all.insert(loc=2, column='gamer_id', value=gamer_id)
+# games_details_all['game_type'] = np.where(
+#     games_details_all['game_type'] == '',
+#     'Other',
+#     games_details_all['game_type'])
+# games_details_all.reset_index(inplace=True, drop=True)
+
 
 print(games_most_recent)
 print(games_prior)
