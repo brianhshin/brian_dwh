@@ -64,7 +64,7 @@ games_prior = games_by_day[1].findAll('div', attrs={'class':'match__row'})
 
 # game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
 
-print(games_by_day[0])
+print(games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'}))
 # for x in range(len(games_most_recent)):
 #     game_details_df = get_game_details_for_day(games_most_recent, x)
 #     game_date = games_by_day[0].findAll('h3', attrs={'class': 'trn-gamereport-list__title'})[0]
