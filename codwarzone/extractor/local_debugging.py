@@ -23,8 +23,8 @@ import argparse
 import logging
 
 ssl._create_default_https_context = ssl._create_unverified_context
-driver_path = 'c:/Users/email//tinker/brian_dwh/drivers/chromedriver_linux_87'
 
+driver_path = '/home/ubuntu/brian_dwh/drivers/chromedriver_linux_87'
 
 chrome_options = Options()
 chrome_options.add_argument('--headless')
