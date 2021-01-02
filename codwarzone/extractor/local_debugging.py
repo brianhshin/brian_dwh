@@ -61,3 +61,7 @@ games_by_day = game_links_soup.findAll('div', attrs={'class': 'trn-gamereport-li
 games_details_all = pd.DataFrame()
 games_most_recent = games_by_day[0].findAll('div', attrs={'class':'match__row'})
 games_prior = games_by_day[1].findAll('div', attrs={'class':'match__row'})
+
+
+print(games_most_recent)
+print(games_prior)
